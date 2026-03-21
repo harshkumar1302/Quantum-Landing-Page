@@ -36,7 +36,7 @@ export function ContactSection() {
                        whileInView={{ opacity: 1, x: 0 }}
                        viewport={{ once: true }}
                        transition={{ delay: i * 0.1 }}
-                       className="group flex items-center justify-between p-8 rounded-[32px] border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/20 transition-all duration-500"
+                       className="group flex items-center justify-between p-8 rounded-[32px] border border-foreground/5 bg-foreground/[0.01] hover:bg-foreground/[0.03] hover:border-foreground/20 transition-all duration-500"
                     >
                        <div className="flex items-center gap-8">
                           <div className="w-12 h-12 rounded-2xl bg-foreground/5 flex items-center justify-center text-foreground/40 group-hover:text-primary transition-colors">
@@ -78,31 +78,31 @@ export function ContactSection() {
 
               <div className="relative z-10 flex flex-col gap-10">
                  <div className="space-y-4">
-                    <h3 className="text-xl font-mono uppercase tracking-[0.4em] text-white/30">Laboratory Query</h3>
-                    <p className="text-white/50 text-sm font-light leading-relaxed">Please provide your credentials and the nature of your inquiry for department routing.</p>
+                    <h3 className="text-xl font-mono uppercase tracking-[0.4em] text-foreground/30">Laboratory Query</h3>
+                    <p className="text-foreground/50 text-sm font-light leading-relaxed">Please provide your credentials and the nature of your inquiry for department routing.</p>
                  </div>
                  
-                 <form 
-                   className="flex flex-col gap-8"
+                  <form 
+                   className="flex flex-col gap-6"
                    onSubmit={(e) => {
                      e.preventDefault();
                      setIsSubmitted(true);
                    }}
                  >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                        <div className="space-y-3">
-                          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/20">Name</label>
-                          <input required type="text" className="w-full bg-foreground/5 border-b border-foreground/10 px-0 py-3 text-sm focus:outline-none focus:border-primary transition-colors text-foreground font-light" placeholder="ENTITY NAME" />
+                          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/40 ml-2">Name</label>
+                          <input required type="text" className="w-full bg-foreground/[0.03] border border-foreground/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-300 text-foreground font-light placeholder:text-foreground/20" placeholder="ENTITY NAME" />
                        </div>
                        <div className="space-y-3">
-                          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/20">Email</label>
-                          <input required type="email" className="w-full bg-foreground/5 border-b border-foreground/10 px-0 py-3 text-sm focus:outline-none focus:border-primary transition-colors text-foreground font-light" placeholder="NETWORK ADDRESS" />
+                          <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/40 ml-2">Email</label>
+                          <input required type="email" className="w-full bg-foreground/[0.03] border border-foreground/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-300 text-foreground font-light placeholder:text-foreground/20" placeholder="NETWORK ADDRESS" />
                        </div>
                     </div>
                     
                     <div className="space-y-3">
-                       <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/20">Department</label>
-                       <select className="w-full bg-transparent border-b border-foreground/10 px-0 py-3 text-sm focus:outline-none focus:border-primary transition-colors text-foreground/60 font-light appearance-none">
+                       <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/40 ml-2">Department</label>
+                       <select className="w-full bg-foreground/[0.03] border border-foreground/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-300 text-foreground/80 font-light appearance-none">
                           <option className="bg-background text-foreground">Quantum Engine Collab</option>
                           <option className="bg-background text-foreground">Venture Capital</option>
                           <option className="bg-background text-foreground">Media / Press</option>
@@ -111,11 +111,11 @@ export function ContactSection() {
                     </div>
 
                     <div className="space-y-3">
-                       <label className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">Payload</label>
-                       <textarea required rows={4} className="w-full bg-white/5 border-b border-white/10 px-0 py-3 text-sm focus:outline-none focus:border-primary transition-colors resize-none text-white font-light" placeholder="MESSAGE CONTENT"></textarea>
+                       <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/40 ml-2">Payload</label>
+                       <textarea required rows={4} className="w-full bg-foreground/[0.03] border border-foreground/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-300 resize-none text-foreground font-light placeholder:text-foreground/20" placeholder="MESSAGE CONTENT"></textarea>
                     </div>
 
-                    <button type="submit" data-magnetic className="w-full bg-white text-black font-black uppercase tracking-[0.3em] text-xs py-6 rounded-2xl hover:bg-primary transition-colors">
+                    <button type="submit" data-magnetic className="w-full bg-foreground text-background font-black uppercase tracking-[0.3em] text-xs py-6 rounded-2xl hover:bg-primary hover:text-white transition-colors">
                        SEND UPLINK
                     </button>
                  </form>

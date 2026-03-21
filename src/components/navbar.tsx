@@ -67,36 +67,38 @@ export function Navbar() {
             <AnimatePresence>
               {productsHovered && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[400px] p-2 bg-background border border-foreground/10 rounded-2xl shadow-xl flex flex-col gap-2"
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[420px] p-3 bg-background/70 backdrop-blur-3xl border border-foreground/10 rounded-3xl shadow-2xl flex flex-col gap-2"
                 >
                    <Link 
                      href="/products/creonnect"
-                     className="group flex gap-4 p-4 hover:bg-foreground/5 rounded-xl transition-colors"
+                     className="group flex gap-5 p-4 hover:bg-foreground/[0.04] rounded-2xl transition-all duration-300 relative overflow-hidden"
                      onClick={() => setProductsHovered(false)}
                    >
-                      <div className="w-12 h-12 rounded-xl bg-[#7C3AED] shrink-0 flex items-center justify-center shadow-md">
-                         <span className="text-white font-bold text-xl">C</span>
+                      <div className="absolute inset-0 bg-gradient-to-tr from-[#7C3AED]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#5B21B6] shrink-0 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
+                         <span className="text-white font-black text-2xl">C</span>
                       </div>
-                      <div>
-                         <h4 className="font-bold text-base group-hover:text-primary flex items-center gap-2">
+                      <div className="relative z-10">
+                         <h4 className="font-bold text-base group-hover:text-primary flex items-center gap-3 transition-colors duration-300">
                             Creonnect
-                            <span className="px-2 py-0.5 rounded-full text-[10px] uppercase font-bold bg-green-500/10 text-green-500">Live</span>
+                            <span className="px-2 py-0.5 rounded-full text-[9px] uppercase font-black bg-green-500/10 text-green-500 tracking-widest border border-green-500/20">Live</span>
                          </h4>
-                         <p className="text-xs text-foreground/60 mt-1">The AI-Powered CreatorOS for Instagram</p>
+                         <p className="text-xs text-foreground/50 mt-1 leading-relaxed">The AI-Powered CreatorOS for Instagram</p>
                       </div>
                    </Link>
                    
-                   <div className="flex gap-4 p-4 bg-foreground/[0.02] rounded-xl border border-dashed border-foreground/10">
-                      <div className="w-12 h-12 rounded-xl bg-foreground/5 shrink-0 flex items-center justify-center">
-                         <Layers className="w-5 h-5 text-foreground/40" />
+                   <div className="flex gap-5 p-4 bg-foreground/[0.02] rounded-2xl border border-dashed border-foreground/10 items-center">
+                      <div className="w-14 h-14 rounded-2xl bg-foreground/5 shrink-0 flex items-center justify-center">
+                         <Layers className="w-6 h-6 text-foreground/30" />
                       </div>
                       <div>
-                         <h4 className="font-bold text-sm text-foreground/60">More Coming Soon</h4>
-                         <p className="text-xs text-foreground/40 mt-1">We're actively building the next tools.</p>
+                         <h4 className="font-bold text-sm text-foreground/50">More Coming Soon</h4>
+                         <p className="text-xs text-foreground/30 mt-1">We're actively building the next tools.</p>
                       </div>
                    </div>
                 </motion.div>

@@ -7,6 +7,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { Loader } from "@/components/loader";
+import { SmoothScroll } from "@/components/smooth-scroll";
 
 
 
@@ -21,8 +22,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QuantumRealm AI Labs",
-  description: "Building AI infrastructure for the creator economy.",
+  title: "QuantumRealm AI Labs | AI-Powered Creator Operating Systems",
+  description: "The premier AI lab engineering predictive infrastructure and operating systems like Creonnect for creators, brands, and agencies to automate Instagram growth, DMs, and community management.",
+  keywords: [
+    "AI Creator OS", "Instagram Growth Platform", "AI Agency Solutions", "Brand Automation AI",
+    "Creonnect", "Quantum Engine API", "Creator Economy Infrastructure", "Predictive AI Ecosystems", "Automated DMs"
+  ],
+  openGraph: {
+    title: "QuantumRealm AI Labs",
+    description: "Building the AI infrastructure powering the next era of creators, including Creonnect.",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "QuantumRealm AI Labs",
+    description: "Engineering generative UI and predictive ecosystems for the creator economy.",
+  }
 };
 
 export default function RootLayout({
@@ -36,7 +51,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col relative" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -47,9 +62,11 @@ export default function RootLayout({
           <CustomCursor />
           <Loader />
           <Navbar />
-          <main className="w-full flex-1">
-            {children}
-          </main>
+          <SmoothScroll>
+            <main className="w-full flex-1 relative flex flex-col items-center">
+              {children}
+            </main>
+          </SmoothScroll>
           <Footer />
           <ScrollToTop />
         </ThemeProvider>

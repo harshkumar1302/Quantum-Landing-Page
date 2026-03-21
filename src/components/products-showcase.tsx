@@ -55,9 +55,9 @@ const TiltCard = ({ children, className = "" }: { children: React.ReactNode, cla
 
 export function ProductsShowcase() {
   return (
-    <section className="py-32 bg-[#05050A] text-white overflow-hidden relative" id="products">
+    <section className="py-32 bg-background text-foreground overflow-hidden relative transition-colors duration-500" id="products">
       {/* Background Decor */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="container mx-auto px-4 md:px-8 relative z-10">
@@ -67,10 +67,10 @@ export function ProductsShowcase() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 mb-6 border border-white/10 bg-white/5 rounded-full px-4 py-1.5 backdrop-blur-sm"
+            className="inline-flex items-center gap-2 mb-6 border border-foreground/10 bg-foreground/5 rounded-full px-4 py-1.5 backdrop-blur-sm"
           >
              <Box className="w-4 h-4 text-purple-400" />
-             <span className="text-xs uppercase tracking-widest font-bold text-white/80">Ecosystem Architecture</span>
+             <span className="text-xs uppercase tracking-widest font-bold text-foreground/80">Ecosystem Architecture</span>
           </motion.div>
           
           <motion.h2 
@@ -88,7 +88,7 @@ export function ProductsShowcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-xl text-white/50 leading-relaxed"
+            className="text-lg md:text-xl text-foreground/50 leading-relaxed"
           >
             QuantumRealm isn't just a suite of tools. It's a foundational AI layer—the Quantum Engine—capable of understanding nuanced creator workflows and adapting seamlessly to any surface area.
           </motion.p>
@@ -98,7 +98,7 @@ export function ProductsShowcase() {
            
            {/* Core Infrastructure */}
            <div className="lg:col-span-8 h-full">
-              <TiltCard className="h-full bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 overflow-hidden">
+              <TiltCard className="h-full bg-gradient-to-br from-foreground/[0.05] to-transparent border border-foreground/10 overflow-hidden">
                  <div className="absolute inset-0" style={{ transform: "translateZ(-20px)" }}>
                     {/* SVG Grid Node BG */}
                     <svg className="absolute inset-0 w-full h-full opacity-10" width="100%" height="100%">
@@ -115,7 +115,7 @@ export function ProductsShowcase() {
                     </div>
                     
                     <h3 className="text-3xl md:text-5xl font-black mb-4">Quantum Engine API</h3>
-                    <p className="text-white/60 text-lg mb-8 max-w-lg leading-relaxed">
+                    <p className="text-foreground/60 text-lg mb-8 max-w-lg leading-relaxed">
                        Our proprietary intelligence layer. Processing NLP, computer vision, and predictive time-series data at 10M+ events per day with single-digit millisecond latency.
                     </p>
                     <a href="#tech" className="inline-flex items-center gap-2 text-primary font-bold hover:gap-4 transition-all w-max uppercase tracking-widest text-sm">
@@ -134,19 +134,19 @@ export function ProductsShowcase() {
                     </div>
                     <span className="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-blue-500/20 text-blue-400 mb-4 inline-block">Flagship App</span>
                     <h3 className="text-2xl font-bold mb-3">Creonnect</h3>
-                    <p className="text-white/60 text-sm leading-relaxed mb-6">
+                    <p className="text-foreground/60 text-sm leading-relaxed mb-6">
                        The complete Creator Operating System built entirely on the Quantum Engine. Automates DMs, scheduling, and community analytics intelligently.
                     </p>
-                    <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 text-white font-bold hover:text-blue-400 transition-colors text-sm">
+                    <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 text-foreground font-bold hover:text-blue-400 transition-colors text-sm">
                        Visit Creonnect.com <ArrowRight className="w-4 h-4" />
                     </a>
                  </div>
               </TiltCard>
               
-              <TiltCard className="flex-1 bg-white/5 border border-white/10 p-8 flex flex-col justify-center items-center text-center">
+              <TiltCard className="flex-1 bg-foreground/5 border border-foreground/10 p-8 flex flex-col justify-center items-center text-center">
                  <div style={{ transform: "translateZ(20px)" }}>
-                    <h3 className="text-xl font-bold mb-3 text-white/40">Project X</h3>
-                    <p className="text-white/30 text-xs uppercase tracking-widest w-full border-t border-white/10 pt-4 mt-4">
+                    <h3 className="text-xl font-bold mb-3 text-foreground/40">Project X</h3>
+                    <p className="text-foreground/30 text-xs uppercase tracking-widest w-full border-t border-foreground/10 pt-4 mt-4">
                        In stealth mode
                     </p>
                  </div>
