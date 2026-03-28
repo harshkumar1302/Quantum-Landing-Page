@@ -8,9 +8,9 @@ export function ContactSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const paths = [
-    { icon: <Handshake className="w-5 h-5" />, title: "Collaboration", desc: "Integrate with the Engine.", email: "collab@quantumrealm.ai" },
-    { icon: <Landmark className="w-5 h-5" />, title: "Ventures", desc: "Back the core infrastructure.", email: "ventures@quantumrealm.ai" },
-    { icon: <Newspaper className="w-5 h-5" />, title: "Neural Press", desc: "Media & Lab reports.", email: "press@quantumrealm.ai" },
+    { icon: <Handshake className="w-5 h-5" />, title: "Collaboration", desc: "Integrate with the Engine.", email: "hello@quantumrealm.cloud" },
+    { icon: <Landmark className="w-5 h-5" />, title: "Ventures", desc: "Back the core infrastructure.", email: "hello@quantumrealm.cloud" },
+    { icon: <Newspaper className="w-5 h-5" />, title: "Neural Press", desc: "Media & Lab reports.", email: "hello@quantumrealm.cloud" },
   ];
 
   return (
@@ -103,6 +103,7 @@ export function ContactSection() {
                     <div className="space-y-3">
                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/40 ml-2">Department</label>
                        <select className="w-full bg-foreground/[0.03] border border-foreground/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-300 text-foreground/80 font-light appearance-none">
+                          <option className="bg-background text-foreground">Testing Phase Access</option>
                           <option className="bg-background text-foreground">Quantum Engine Collab</option>
                           <option className="bg-background text-foreground">Venture Capital</option>
                           <option className="bg-background text-foreground">Media / Press</option>

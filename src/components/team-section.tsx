@@ -7,16 +7,39 @@ import { ArrowRight, Linkedin } from "lucide-react";
 export function TeamSection() {
   const team = [
     {
-      name: "Sumanth",
-      title: "Founder & CEO",
-      bio: "Product builder obsessed with creator workflows. Formerly building enterprise AI systems.",
-      linkedin: "https://linkedin.com/in/sumanth",
+      name: "Dheerendra",
+      title: "Founder / CEO",
+      bio: "Leads product vision. Who knows exactly what's broken and how to fix it",
+      linkedin: "https://www.linkedin.com/in/dheerendra-dev/",
+      image: "/images/dheerendra.jpg"
     },
     {
-      name: "Aditya N.",
-      title: "Co-Founder & CTO",
-      bio: "Scaling infrastructure to 10M+ events/day. Previous engineering leadership at Meta.",
-      linkedin: "https://linkedin.com/in/adityan",
+      name: "Krishna",
+      title: "Co-Founder / Engineering",
+      bio: "The engine behind the engine. Architects everything that runs under the hood",
+      linkedin: "https://www.linkedin.com/in/krishna-sharma-881152120/",
+      image: "/images/krishna.jpg"
+    },
+    {
+      name: "Ayush",
+      title: "Co-Founder / CTO",
+      bio: "The backbone. Builds and owns everything that runs behind the scenes.",
+      linkedin: "https://www.linkedin.com/in/ayush-mandhana/",
+      image: "/images/ayush.jpg"
+    },
+    {
+      name: "Sharath",
+      title: "Founding AI Engineer",
+      bio: "Teaches the machine how to think. The AI layer is entirely his.",
+      linkedin: "https://in.linkedin.com/in/maddireddysharath",
+      image: "/images/sharath.jpg"
+    },
+    {
+      name: "Harsh",
+      title: "Growth / Marketing",
+      bio: "The growth brain. Making sure the right people hear about Creonnect at the right time.",
+      linkedin: "https://www.linkedin.com/in/harshkumarsuman/",
+      image: "/images/harsh.jpg"
     }
   ];
 
@@ -54,10 +77,10 @@ export function TeamSection() {
                className="group"
              >
                 <div className="aspect-square bg-foreground/10 rounded-3xl overflow-hidden mb-6 relative">
-                   {/* Placeholder for real team photo */}
-                   <div className="absolute inset-0 bg-gradient-to-tr from-foreground/5 to-transparent flex items-center justify-center">
-                      <span className="text-foreground/20 font-bold text-6xl group-hover:scale-110 transition-transform">{member.name[0]}</span>
-                   </div>
+                   <div 
+                      className="absolute inset-0 group-hover:scale-110 transition-transform duration-700" 
+                      style={{ backgroundImage: `url(${member.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} 
+                   />
                 </div>
                 <div className="flex justify-between items-start">
                    <div>
@@ -80,7 +103,7 @@ export function TeamSection() {
            transition={{ delay: 0.3 }}
            className="mt-16 text-center"
         >
-           <p className="text-foreground/60 font-medium mb-6">And 15+ engineers, designers, and AI researchers</p>
+           <p className="text-foreground/60 font-medium mb-6">Five builders. Zero noise. Engineering the future of creator autonomy.</p>
            <Link
              href="/team"
              className="inline-flex items-center space-x-2 bg-foreground text-background px-6 py-3 rounded-full font-bold hover:bg-foreground/90 transition-colors"

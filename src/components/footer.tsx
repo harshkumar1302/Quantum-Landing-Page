@@ -1,21 +1,17 @@
 import Link from "next/link";
 import { Instagram, Linkedin, Twitter } from "lucide-react";
+import { Logo } from "./logo";
 
 export function Footer() {
   return (
     <footer className="bg-background pt-20 pb-10 border-t border-foreground/10 text-foreground/80">
       <div className="container mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 mb-16">
           
           {/* Column 1: Company */}
           <div className="col-span-2 md:col-span-1 flex flex-col space-y-4">
-             <Link href="/" className="flex items-center space-x-2 w-max">
-                <div className="w-6 h-6 rounded bg-primary flex items-center justify-center">
-                   <span className="text-white font-bold text-xs">Q</span>
-                </div>
-                <span className="font-bold text-base tracking-tight text-foreground">
-                   QuantumRealm
-                </span>
+             <Link href="/" className="flex items-center w-max hover:opacity-80 transition-opacity mb-2">
+                <Logo size="sm" />
              </Link>
              <p className="text-sm text-foreground/60 leading-relaxed">
                 Building AI infrastructure for the creator economy

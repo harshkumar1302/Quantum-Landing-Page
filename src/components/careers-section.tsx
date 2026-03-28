@@ -6,9 +6,8 @@ import { ArrowRight } from "lucide-react";
 
 export function CareersSection() {
   const roles = [
-    { title: "Senior Frontend Engineer", dept: "Engineering" },
-    { title: "AI/ML Engineer", dept: "AI & Research" },
-    { title: "Product Designer", dept: "Design" }
+    { title: "UI Engineer Intern", dept: "Engineering" },
+    { title: "Social Media Creator", dept: "Marketing" }
   ];
 
   return (
@@ -65,7 +64,7 @@ export function CareersSection() {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <div className="text-sm text-white/50 block">
-                 Don't see your role? Send your portfolio → <a href="mailto:careers@quantumrealmai.com" className="text-primary hover:underline">careers@quantumrealmai.com</a>
+                 Don't see your role? Send your portfolio → <a href="mailto:hello@quantumrealm.cloud" className="text-primary hover:underline">hello@quantumrealm.cloud</a>
               </div>
             </motion.div>
           </div>

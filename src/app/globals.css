@@ -9,6 +9,8 @@
   --color-border: var(--border-muted);
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --background: #ffffff;
@@ -32,13 +34,12 @@
 body {
   background-color: var(--background);
   color: var(--foreground);
-  cursor: none; /* Enforce custom cursor */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 a, button {
-  cursor: none !important;
+  cursor: pointer;
 }
 
 /* Global SVG Noise Overlay */
@@ -58,4 +59,19 @@ a, button {
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 6s ease infinite;
 }

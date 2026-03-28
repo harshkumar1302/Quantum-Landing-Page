@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { Logo } from "./logo";
 
 export function Loader() {
   const [isLoading, setIsLoading] = useState(true);
@@ -47,27 +48,14 @@ export function Loader() {
             </div>
 
             {/* Typography */}
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
-                className="text-2xl font-bold tracking-[0.2em] uppercase"
-              >
-                QuantumRealm
-              </motion.h1>
-            </div>
-            
-            <div className="overflow-hidden mt-2">
-              <motion.p
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-                className="text-xs text-foreground/60 tracking-widest font-mono"
-              >
-                INITIALIZING AI INFRASTRUCTURE
-              </motion.p>
-            </div>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+              className="mt-4"
+            >
+              <Logo size="md" />
+            </motion.div>
           </div>
         </motion.div>
       )}

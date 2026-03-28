@@ -1,27 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Twitter, Linkedin } from "lucide-react";
+import { Linkedin } from "lucide-react";
 
 export default function TeamPage() {
   const members = [
     {
-      name: "Suman Shah",
-      role: "Founder & Lead Architect",
-      bio: "Systems engineering specialist with 10+ years in distributed AI architecture and creator neural networks.",
-      image: "linear-gradient(135deg, var(--color-primary) 0%, transparent 100%)"
+      name: "Dheerendra",
+      role: "Founder / CEO",
+      bio: "Leads product vision. Who knows exactly what's broken and how to fix it",
+      image: "/images/dheerendra.jpg",
+      linkedin: "https://www.linkedin.com/in/dheerendra-dev/"
     },
     {
-       name: "Aarav Sharma",
-       role: "Core Intelligence Engineer",
-       bio: "Expert in natural language processing and agentic behaviors across diverse creator ecosystems.",
-       image: "linear-gradient(135deg, #3b82f6 0%, transparent 100%)"
+       name: "Krishna",
+       role: "Co-Founder / Engineering",
+       bio: "The engine behind the engine. Architects everything that runs under the hood",
+       image: "/images/krishna.jpg",
+       linkedin: "https://www.linkedin.com/in/krishna-sharma-881152120/"
     },
     {
-       name: "Ishita Kapoor",
-       role: "Product Visionary",
-       bio: "Focused on human-computer interaction and building seamless growth loops for modern creators.",
-       image: "linear-gradient(135deg, #a855f7 0%, transparent 100%)"
+       name: "Ayush",
+       role: "Co-Founder / CTO",
+       bio: "The backbone. Builds and owns everything that runs behind the scenes.",
+       image: "/images/ayush.jpg",
+       linkedin: "https://www.linkedin.com/in/ayush-mandhana/"
+    },
+    {
+       name: "Sharath",
+       role: "Founding AI Engineer",
+       bio: "Teaches the machine how to think. The AI layer is entirely his.",
+       image: "/images/sharath.jpg",
+       linkedin: "https://in.linkedin.com/in/maddireddysharath"
+    },
+    {
+       name: "Harsh",
+       role: "Growth / Marketing",
+       bio: "The growth brain. Making sure the right people hear about Creonnect at the right time.",
+       image: "/images/harsh.jpg",
+       linkedin: "https://www.linkedin.com/in/harshkumarsuman/"
     }
   ];
 
@@ -36,13 +53,13 @@ export default function TeamPage() {
               Mind Behind <br />
               <span className="text-transparent border-text">The Machine</span>
            </h1>
-           <p className="text-xl text-muted font-light max-w-2xl leading-relaxed">
-              We are a collective of researchers, hackers, and designers obsessed with autonomy and intelligence.
+           <p className="text-xl text-muted font-light max-w-3xl leading-relaxed">
+              Five builders. Zero noise. Absolute precision. We are a tactical unit of engineers and researchers architecting the autonomous infrastructure for creator scale.
            </p>
         </div>
 
         {/* Members Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
            {members.map((member, i) => (
              <motion.div
                 key={i}
@@ -53,16 +70,13 @@ export default function TeamPage() {
                 className="group relative flex flex-col p-8 rounded-[40px] bg-foreground/[0.01] border border-foreground/5 hover:border-foreground/20 transition-all duration-700"
              >
                 <div className="aspect-square w-full rounded-3xl overflow-hidden mb-8 relative border border-foreground/5 bg-foreground/[0.02]">
-                   <div className="absolute inset-0 group-hover:scale-110 transition-transform duration-1000 opacity-20" style={{ background: member.image }} />
+                   <div className="absolute inset-0 group-hover:scale-110 transition-transform duration-1000" style={{ backgroundImage: `url(${member.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
                    <div className="absolute inset-0 bg-background/40 group-hover:bg-transparent transition-colors duration-700" />
                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 scale-90 group-hover:scale-100">
                       <div className="flex gap-4">
-                         <button className="w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 flex items-center justify-center backdrop-blur-md border border-foreground/10 transition-all">
-                            <Twitter className="w-4 h-4" />
-                         </button>
-                         <button className="w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 flex items-center justify-center backdrop-blur-md border border-foreground/10 transition-all">
-                            <Github className="w-4 h-4" />
-                         </button>
+                         <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-foreground/10 hover:bg-foreground/20 flex items-center justify-center backdrop-blur-md border border-foreground/10 transition-all">
+                            <Linkedin className="w-4 h-4" />
+                         </a>
                       </div>
                    </div>
                 </div>

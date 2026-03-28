@@ -1,476 +1,384 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { BlogSection } from "@/components/blog-section";
-import { ContactSection } from "@/components/contact-section";
-import { InteractiveAvatar } from "@/components/interactive-avatar";
+import { 
+  ArrowRight, ShieldCheck, Zap, Database, TrendingUp, Infinity, Plus, 
+  MessageSquare, UserCheck, Key, Lock, Minus, Code2, Globe, Server, CheckCircle2
+} from "lucide-react";
+import { Logo } from "@/components/logo";
+import { TeamSection } from "@/components/team-section";
+import { CareersSection } from "@/components/careers-section";
+
+/** =======================================================
+ * DATA LAYERS & COPYWRITING (Approved from Strategy)
+ * ======================================================== */
+
+const features = [
+  { 
+    icon: <MessageSquare className="w-6 h-6 text-[#7C3AED]" />, 
+    title: "Neuro-Linguistic DMs", 
+    desc: "AI that understands context, tone, and intent with 99.9% accuracy. It mimics your exact syntax to close thousands of leads while you sleep." 
+  },
+  { 
+    icon: <TrendingUp className="w-6 h-6 text-[#3B82F6]" />, 
+    title: "Predictive Analytics", 
+    desc: "Stop guessing. Track historical engagement velocities to know exactly when and what to post for maximum algorithmic reach." 
+  },
+  { 
+    icon: <Database className="w-6 h-6 text-[#10B981]" />, 
+    title: "MongoDB Accelerated", 
+    desc: "Built on deeply scalable, distributed data structures. We process 10M+ webhook events securely every single day." 
+  },
+  { 
+    icon: <Infinity className="w-6 h-6 text-[#EC4899]" />, 
+    title: "Infinite Parallel Routing", 
+    desc: "Engage with 10,000 followers simultaneously without ever hitting conversational rate limits. Scale without the sandbox." 
+  },
+];
+
+const steps = [
+  { num: "01", icon: <Globe />, title: "Connect", desc: "Securely link your Instagram account via official 100% compliant APIs." },
+  { num: "02", icon: <Code2 />, title: "Train", desc: "Provide your brand voice. The Quantum Engine maps your historical tone." },
+  { num: "03", icon: <Zap />, title: "Scale", desc: "Turn on the OS. Watch your engagement and lead generation scale infinitely." },
+];
+
+const faqs = [
+  { q: "Is this safe for my Instagram account?", a: "100%. We operate strictly within Instagram's official API guidelines ensuring zero risk of shadowbans or account locks. We do not use scraping." },
+  { q: "How human does the AI sound?", a: "The Quantum Engine is trained exclusively on your historical conversational data. It mimics your exact syntax, emojis, and slang. It is indistinguishable from you." },
+  { q: "Can I take over a conversation?", a: "Yes. You have a unified dashboard where you can override the AI and instantly take over any high-value conversation in real-time." },
+  { q: "What does the Testing Phase waitlist mean?", a: "We are heavily restricting server loads to ensure 99.9% uptime for elite early creators. Waitlist approval currently takes ~48 hours." }
+];
+
+/** =======================================================
+ * REUSABLE ANIMATED COMPONENTS
+ * ======================================================== */
+
+const SectionBadge = ({ text, colorHex = "#7C3AED" }: { text: string, colorHex?: string }) => (
+  <motion.div 
+    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 mb-8 backdrop-blur-sm"
+  >
+    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: colorHex }} />
+    <span className="text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-black dark:text-white opacity-80">{text}</span>
+  </motion.div>
+);
+
+const FAQItem = ({ faq, index }: { faq: typeof faqs[0], index: number }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
+      className="border-b border-black/10 dark:border-white/10"
+    >
+      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between text-left group py-8 text-black dark:text-white">
+        <h3 className="text-xl sm:text-2xl font-bold pr-6 opacity-90 group-hover:opacity-100 transition-opacity">{faq.q}</h3>
+        <span className={`w-12 h-12 shrink-0 rounded-full flex items-center justify-center transition-colors duration-300 ${isOpen ? 'bg-[#7C3AED] text-white' : 'bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10'}`}>
+          {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
+        </span>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+            <p className="pb-8 text-black/60 dark:text-white/60 font-light leading-relaxed text-lg max-w-3xl">{faq.a}</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
+  );
+};
+
+/** =======================================================
+ * MAIN PAGE COMPOENT
+ * ======================================================== */
 
 export default function Home() {
-
-  // Custom Spotlight for Hero
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const spotX = useSpring(mouseX, { stiffness: 100, damping: 20 });
-  const spotY = useSpring(mouseY, { stiffness: 100, damping: 20 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  // Global Scroll Transforms
-  const { scrollYProgress } = useScroll();
-
-  // Scene 1 Transforms (Hero)
-  const heroScale = useTransform(scrollYProgress, [0, 0.15], [1, 0.85]);
-  const heroOpacity = useTransform(scrollYProgress, [0.05, 0.15], [1, 0]);
-  const heroFilter = useTransform(scrollYProgress, [0.05, 0.15], ["blur(0px)", "blur(10px)"]);
-
-  // Scene 2 Transforms (Horizontal Scroll Products)
-  const horizontalScrollRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: horizontalProgress } = useScroll({
-    target: horizontalScrollRef,
-    offset: ["start start", "end end"]
-  });
-
-  // High-performance spring physics to interpolate scroll delta
-  const smoothHorizontalProgress = useSpring(horizontalProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001
-  });
-
-  // Perfect math: container is 400vh, we slide by 200vw to see all 3 screens (100vw each)
-  // Math for 2 horizontal cards: container is 300vh, we slide by 100vw to see both screens.
-  // We complete the slide early to pause at the end!
-  const horizontalScrollX = useTransform(smoothHorizontalProgress, [0, 0.66], ["0vw", "-100vw"]);
-
-  // Scene 3 Transforms (Tech & Text)
-  const techBgColor = useTransform(
-    scrollYProgress,
-    [0.55, 0.65, 0.8, 0.9],
-    ["var(--background)", "var(--background)", "var(--background)", "var(--background)"]
-  );
+  const [isWaitlisted, setIsWaitlisted] = useState(false);
 
   return (
-    <div className="w-full bg-background text-foreground transition-colors duration-500 overflow-clip">
+    <main className="w-full bg-white dark:bg-[#000000] text-black dark:text-white transition-colors duration-500 overflow-clip">
 
-      {/* ========================================
-          SEO INVISIBLE BLOCK (Strictly for bots)
-          ======================================== */}
-      <h1 className="sr-only">QuantumRealm AI Labs - The Ultimate AI Creator OS & Instagram Growth Agency Solution</h1>
-      <p className="sr-only">
-        QuantumRealm AI Labs is the premier AI infrastructure lab building generative UI and predictive ecosystems for the creator economy.
-        Our flagship product, Creonnect, is an AI-powered Instagram Growth Platform designed to automate DMs, scheduling, and community analytics
-        infinitely without manual intervention. We solve top creators related problems and provide elite brand solutions and agency solutions globally,
-        scaling from the Indian market to the Asian and overseas global market. Creonnect by QuantumRealm processes over 10M+ events daily with
-        99.9% contextual NLP accuracy, making us the top-tier engine for creators.
-      </p>
+      {/* ==========================================
+          1. HERO (Value + Trust + CTA)
+          ========================================== */}
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 md:px-8 pt-32 pb-20 overflow-hidden">
+         {/* Premium Lighting Effects */}
+         <div className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[#7C3AED] opacity-[0.05] dark:opacity-[0.15] blur-[120px] rounded-full pointer-events-none" />
+         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,black_70%,transparent_100%)] pointer-events-none" />
 
-      {/* 
-        ========================================
-        SCENE 1: THE ABYSS HERO 
-        Using a native sticky container approach to ensure 100% reliable initial render
-        ========================================
-      */}
-      <div className="relative w-full h-[150vh] z-10">
-        <motion.section
-          className="sticky top-0 left-0 w-full h-screen flex flex-col items-center justify-start overflow-hidden pt-[20vh]"
-          style={{
-            scale: heroScale,
-            opacity: heroOpacity,
-            filter: heroFilter,
-            pointerEvents: "none"
-          }}
-        >
-          {/* Dynamic Spotlight */}
-          <motion.div
-            className="absolute inset-0 z-0 bg-transparent mix-blend-screen dark:mix-blend-screen mix-blend-multiply opacity-50 dark:opacity-100"
-            style={{
-              background: `radial-gradient(circle 600px at ${spotX}px ${spotY}px, var(--color-primary), transparent 80%)`,
-            }}
-          />
-
-          <div className="relative z-10 text-center flex flex-col items-center w-full px-4">
-            {/* Premium Pill Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md"
+         <div className="relative z-10 flex flex-col items-center text-center max-w-[1200px] mx-auto w-full">
+            
+            {/* Actionable Trust Badge */}
+            <motion.div 
+               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} 
+               className="mb-10 px-4 py-2 rounded-full border border-[#10B981]/30 bg-[#10B981]/5 flex items-center gap-3 backdrop-blur-md shadow-[0_0_30px_rgba(16,185,129,0.1)]"
             >
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_var(--color-primary)]" />
-              <span className="text-[10px] md:text-xs font-mono text-white/80 uppercase tracking-widest">QuantumRealm AI Labs</span>
+               <div className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-60" />
+                  <span className="relative inline-flex rounded-full h-full w-full bg-[#10B981]" />
+               </div>
+               <span className="text-[10px] md:text-xs font-black uppercase tracking-[0.2em] text-[#059669] dark:text-[#34D399]">
+                  Accelerated by MongoDB
+               </span>
             </motion.div>
 
-            {/* Premium Gradient Headline */}
+            {/* Massive Hero Headline */}
             <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground to-foreground/30 w-full text-center max-w-5xl leading-[1.05]"
+               initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+               className="text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem] font-black tracking-tighter leading-[0.95] mb-8"
             >
-              Building the AI Infrastructure<br/>for the Creator Economy.
+               Infinite Scale for <br className="hidden md:block"/>
+               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] via-[#3B82F6] to-[#7C3AED] animate-gradient-x bg-[length:200%_auto]">
+                  Elite Creators.
+               </span>
             </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 1.5 }}
-              className="text-foreground/50 font-light text-lg md:text-xl max-w-2xl mt-8 mx-auto leading-relaxed"
+            {/* Benefit-Driven Subhead */}
+            <motion.p 
+               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 1 }}
+               className="text-lg md:text-2xl font-light text-black/60 dark:text-white/60 max-w-3xl leading-relaxed mb-12 sm:px-4"
             >
-              QuantumRealm AI Labs is an AI-first technology company building intelligent tools that help millions of creators turn their passion into a sustainable business. Our flagship product, Creonnect, is transforming how Instagram creators engage, monetize, and grow.
+               Stop capping your revenue with manual DMs. Creonnect is the autonomous AI operating system that manages your community growth 24/7 without breaking a sweat.
             </motion.p>
 
-            {/* High-End Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-              className="flex flex-col sm:flex-row items-center gap-4 mt-12 z-20 pointer-events-auto"
-            >
-              <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="px-8 py-4 rounded-full bg-foreground text-background font-bold tracking-widest uppercase text-xs hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] flex items-center gap-3 group">
-                Explore Creonnect <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </a>
-              <Link href="/careers" className="px-8 py-4 rounded-full bg-white/[0.03] border border-white/10 text-white font-bold tracking-widest uppercase text-xs hover:bg-white/10 transition-all flex items-center gap-3">
-                We're Hiring
-              </Link>
+            {/* Hyper-Optimized CTA Flow */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-2">
+               <a href="#offer" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-300 group">
+                  Secure Sandbox Access <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+               </a>
+               <a href="#problem" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white font-bold uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300">
+                  See the Engine
+               </a>
             </motion.div>
-            
-          </div>
-
-          {/* The Visual "Anchor" Graphic deeply faded at the bottom */}
-          <motion.div 
-             initial={{ opacity: 0, y: 100 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.7, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-             className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-5xl aspect-[2/1] md:aspect-video rounded-t-3xl border-t border-x border-white/10 bg-gradient-to-b from-white/5 to-transparent overflow-hidden flex justify-center pt-8 z-0 pointer-events-none"
-             style={{ maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)" }}
-          >
-             <div className="w-[80%] h-full rounded-t-2xl border-t border-x border-white/20 bg-black/50 shadow-[0_-20px_50px_rgba(124,58,237,0.1)] flex p-4 gap-4">
-                {/* Mock Code / UI Graphic */}
-                <div className="w-1/3 h-full rounded-xl bg-white/5 border border-white/10 p-4 flex flex-col gap-3">
-                   <div className="w-full h-2 bg-white/20 rounded-full" />
-                   <div className="w-3/4 h-2 bg-white/10 rounded-full" />
-                   <div className="w-5/6 h-2 bg-white/10 rounded-full" />
-                   <div className="w-1/2 h-2 bg-white/10 rounded-full mt-4" />
-                   <div className="w-full h-2 bg-white/10 rounded-full" />
-                </div>
-                <div className="w-2/3 h-full rounded-xl bg-white/5 border border-white/10 p-4 flex flex-col gap-4">
-                   <div className="w-full aspect-video rounded-lg bg-primary/20 border border-primary/30 flex items-center justify-center relative overflow-hidden">
-                      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:1rem_1rem]" />
-                      <div className="w-12 h-12 rounded-full bg-primary/40 animate-ping" />
-                   </div>
-                </div>
-             </div>
-          </motion.div>
-        </motion.section>
-      </div>
-
-      {/* 
-        ========================================
-        SCENE 1.5: MISSION STATEMENT
-        PRD 5.3 - Why We Exist
-        ========================================
-      */}
-      <section className="relative w-full py-32 px-4 z-20 bg-background border-t border-white/5">
-        <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-foreground/50 mb-8">
-            <span className="w-2 h-2 rounded-full bg-primary" />
-            <span className="text-[10px] font-bold uppercase tracking-widest">Why We Exist</span>
-          </div>
-          <p className="text-2xl md:text-5xl font-light leading-tight text-foreground/80">
-            The 100M+ creator economy is throttled by highly fragmented, manual tools.
-            <span className="text-foreground font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-500"> AI is the only scalable answer. </span>
-            We believe every creator deserves an operating system for their business —
-            <span className="font-bold underline decoration-primary decoration-4 underline-offset-8">and we're building it.</span>
-          </p>
-        </div>
+         </div>
       </section>
 
-      {/* 
-        ========================================
-        SCENE 2: HORIZONTAL MONOLITHS 
-        300vh container -> 100vw horizontal translation (2 cards total)
-        ========================================
-      */}
-      <div ref={horizontalScrollRef} className="relative w-full h-[300vh] z-20">
-        <div className="sticky top-0 w-full h-screen overflow-hidden flex items-center bg-background z-20 transition-colors duration-500">
-          {/* Scene 2 Background Glow & Tech Grid */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_50%_at_50%_50%,var(--color-primary),transparent)] opacity-[0.03] pointer-events-none" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_80%_at_center,black_50%,transparent_100%)] pointer-events-none" />
+      {/* ==========================================
+          2 & 3. PROBLEM VS SOLUTION (Juxtaposition Grid)
+          ========================================== */}
+      <section id="problem" className="py-24 md:py-40 bg-black/[0.02] dark:bg-white/[0.02] border-y border-black/5 dark:border-white/5 relative">
+         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
+               
+               {/* High-Friction Problem Block */}
+               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 sm:p-12 rounded-[2rem] border border-red-500/20 bg-red-500/5 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-red-500 opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-1000" />
+                  <SectionBadge text="The Human Bottleneck" colorHex="#EF4444" />
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.1] mb-6">Humans break at scale.</h2>
+                  <p className="text-lg text-black/60 dark:text-white/60 leading-relaxed font-light mb-8">
+                     When you hit 100k+ followers, manual engagement becomes impossible. Leads sit unread, comments go unliked, and sales are lost because <strong>human hours simply do not scale.</strong>
+                  </p>
+                  <ul className="space-y-4 font-mono text-sm sm:text-base opacity-70 border-l border-red-500/30 pl-6">
+                     <li className="flex items-center gap-3"><span className="text-red-500 font-bold">✗</span> Missed brand inquiries in request folders.</li>
+                     <li className="flex items-center gap-3"><span className="text-red-500 font-bold">✗</span> Exhaustion from manual reply cycles.</li>
+                     <li className="flex items-center gap-3"><span className="text-red-500 font-bold">✗</span> Revenue left permanently on the table.</li>
+                  </ul>
+               </motion.div>
 
-          <motion.div
-            className="flex h-full items-center relative z-10 w-[200vw] will-change-transform"
-            style={{ x: horizontalScrollX }}
-          >
-            {/* Card 1: Creonnect (Flagship Product) */}
-            <div className="w-[100vw] h-full flex items-center justify-center px-4 md:px-12">
-              <div className="w-full max-w-6xl h-full max-h-[75vh] relative group pointer-events-auto">
-                <div className="absolute inset-0 bg-white/50 dark:bg-[#050B14]/80 border border-blue-500/10 dark:border-blue-500/20 rounded-[40px] overflow-hidden backdrop-blur-3xl transition-all duration-700 shadow-[0_8px_32px_rgba(59,130,246,0.05)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] group-hover:border-blue-500/50 group-hover:shadow-[0_0_80px_rgba(59,130,246,0.2)]">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,#3b82f6_0%,transparent_50%)] opacity-10 dark:opacity-20 group-hover:opacity-20 dark:group-hover:opacity-40 transition-opacity duration-700" />
+               {/* Autonomous Solution Block */}
+               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="p-8 sm:p-12 rounded-[2rem] border border-[#10B981]/30 bg-[#10B981]/5 relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981] opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-1000" />
+                  <SectionBadge text="The Quantum Ecosystem" colorHex="#10B981" />
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.1] mb-6">Algorithms scale infinitely.</h2>
+                  <p className="text-lg text-black/60 dark:text-white/60 leading-relaxed font-light mb-8">
+                     Creonnect replaces rote repetition with predictive AI agents. We handle DMs, analytics, and community management continuously—deploying the exact tone of your brand perfectly safely.
+                  </p>
+                  <ul className="space-y-4 font-mono text-sm sm:text-base opacity-90 border-l border-[#10B981]/50 pl-6">
+                     <li className="flex items-center gap-3"><span className="text-[#10B981] font-bold">✓</span> Contextual auto-closing of leads in DMs.</li>
+                     <li className="flex items-center gap-3"><span className="text-[#10B981] font-bold">✓</span> 24/7 autonomous engagement protocols.</li>
+                     <li className="flex items-center gap-3"><span className="text-[#10B981] font-bold">✓</span> Zero margin of human error.</li>
+                  </ul>
+               </motion.div>
 
-                  <div className="p-8 md:p-20 h-full flex flex-col justify-end relative z-10 w-full border-t border-white/60 dark:border-white/5 rounded-[40px]">
-                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 w-max mb-6">
-                      <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.8)]" />
-                      <span className="text-[10px] font-bold uppercase tracking-widest">Flagship Product</span>
-                    </div>
+            </div>
+         </div>
+      </section>
 
-                    <h2 className="text-5xl md:text-8xl font-black mb-8 uppercase tracking-tighter text-slate-900 dark:text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-slate-900 dark:group-hover:from-white group-hover:to-blue-500 transition-all duration-500 w-max">
-                      Creonnect
-                    </h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 w-full max-w-5xl mb-12">
-                      <p className="text-slate-700 dark:text-white/70 text-lg md:text-xl font-medium md:font-light leading-relaxed">
-                        The flagship Creator Operating System. Built entirely on the Quantum Engine to automate DMs, scheduling, and community analytics infinitely without manual intervention.
-                      </p>
-                      <ul className="text-slate-800 dark:text-white/60 font-mono text-sm space-y-5 border-l-2 border-blue-500/30 pl-6 h-max mt-2">
-                        <li className="flex items-center gap-4">
-                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" /> Auto DM Automation
-                        </li>
-                        <li className="flex items-center gap-4">
-                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" /> AI Post Analysis
-                        </li>
-                        <li className="flex items-center gap-4">
-                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" /> Brand Marketplace
-                        </li>
-                        <li className="mt-4 text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-900/30 w-max px-3 py-1 rounded-lg">
-                          10,000+ creators on waitlist
-                        </li>
-                      </ul>
-                    </div>
-
-                    <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="relative overflow-hidden inline-flex items-center justify-center md:justify-start gap-4 text-white bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.6)] font-black transition-all duration-300 uppercase tracking-[0.2em] text-xs md:text-sm group-hover:gap-6 w-full md:w-max px-8 py-5 rounded-2xl group/btn">
-                      <span className="relative z-10 flex items-center gap-4">Visit Creonnect <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" /></span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+      {/* ==========================================
+          4. FEATURES (The Tech Platform Engine)
+          ========================================== */}
+      <section className="py-24 md:py-40 relative overflow-hidden">
+         {/* Background Grid Accent */}
+         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent" />
+         
+         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
+            <div className="flex flex-col items-center text-center mb-16 md:mb-24">
+               <SectionBadge text="System Mechanics" />
+               <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-black uppercase tracking-tighter mb-6 leading-[0.9]">
+                  The Platform Architecture
+               </h2>
+               <p className="text-lg sm:text-xl text-black/50 dark:text-white/50 max-w-3xl font-light leading-relaxed">
+                  Built exclusively for the top 1%. Our proprietary AI layer operates natively on a high-throughput, horizontally scalable MongoDB blueprint.
+               </p>
             </div>
 
-            {/* Card 2: Future Products Placeholder */}
-            <div className="w-[100vw] h-full flex items-center justify-center px-4 md:px-12">
-              <div className="w-full max-w-6xl h-full max-h-[75vh] relative group pointer-events-auto">
-                <div className="absolute inset-0 bg-white/30 dark:bg-foreground/[0.02] border border-dashed border-black/10 dark:border-foreground/20 rounded-[40px] overflow-hidden backdrop-blur-3xl transition-all duration-700 shadow-[0_8px_32px_rgba(0,0,0,0.02)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.2)] group-hover:border-primary/40 group-hover:bg-white/50 dark:group-hover:bg-foreground/[0.04] flex flex-col items-center justify-center">
-
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-primary)_0%,transparent_60%)] opacity-5 group-hover:opacity-20 animate-pulse transition-opacity duration-[2000ms]" />
-
-                  <div className="p-8 md:p-24 h-full flex flex-col items-center justify-center text-center relative z-10 w-full border-t border-white/40 dark:border-white/5 rounded-[40px]">
-                    <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-100 dark:bg-foreground/5 border border-slate-200 dark:border-foreground/10 text-slate-500 dark:text-foreground/40 w-max mb-10">
-                      <span className="w-2 h-2 rounded-full bg-slate-400 dark:bg-foreground/30 animate-pulse" />
-                      <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Internal Incubation</span>
-                    </div>
-
-                    <h2 className="text-4xl md:text-7xl font-black mb-8 uppercase tracking-tighter text-slate-800 dark:text-foreground text-transparent bg-clip-text bg-gradient-to-b from-slate-900 to-slate-400 dark:from-foreground dark:to-foreground/40 transform group-hover:scale-105 transition-transform duration-700 relative">
-                      More Products
-                      <br />Coming Soon
-                    </h2>
-
-                    <p className="text-slate-600 dark:text-foreground/50 text-base md:text-lg font-medium max-w-xl leading-relaxed">
-                      QuantumRealm is a multi-product intelligence studio. We are currently architecting the next generation of automation tools for agencies, brands, and creators.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+               {features.map((feat, i) => (
+                  <motion.div 
+                     key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ delay: i * 0.1, duration: 0.5 }}
+                     className="p-8 sm:p-12 rounded-[2rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 group relative overflow-hidden"
+                  >
+                     {/* Hover Glow */}
+                     <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                     
+                     <div className="w-16 h-16 rounded-2xl bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex items-center justify-center mb-8 shadow-sm group-hover:-translate-y-2 transition-transform duration-500 relative z-10">
+                        {feat.icon}
+                     </div>
+                     <h3 className="text-2xl sm:text-3xl font-bold mb-4 tracking-tight relative z-10">{feat.title}</h3>
+                     <p className="text-black/60 dark:text-white/60 leading-relaxed text-lg font-light relative z-10">{feat.desc}</p>
+                  </motion.div>
+               ))}
             </div>
-          </motion.div>
-        </div>
-      </div>
+         </div>
+      </section>
 
-      {/* 
-        ========================================
-        SCENE 3 & 4: DATA STREAM & VOID FOOTER
-        Normal scroll flow
-        ========================================
-      */}
-      <motion.div
-        className="relative w-full z-30 flex flex-col"
-        style={{ backgroundColor: techBgColor }}
-      >
-        {/* Company Metrics (PRD 5.5) */}
-        <div className="max-w-7xl mx-auto px-4 w-full mb-40 mt-32">
-          <div className="flex flex-col items-center mb-20 text-center">
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-foreground mb-4">QuantumRealm by the Numbers</h2>
-            <p className="text-foreground/50 font-mono text-sm max-w-2xl">Real-time telemetry from our operating infrastructure.</p>
-          </div>
+      {/* ==========================================
+          5. HOW IT WORKS (Deployment Flow)
+          ========================================== */}
+      <section className="py-24 md:py-40 bg-black dark:bg-white text-white dark:text-black">
+         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
+            <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-black uppercase tracking-tighter mb-16 md:mb-32 text-center leading-[0.9]">
+               Deployment Protocol
+            </h2>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-8 relative">
+               {/* Desktop Horizontal Line */}
+               <div className="absolute top-[4.5rem] left-0 w-full h-[1px] bg-white/10 dark:bg-black/10 hidden lg:block" />
+               {/* Mobile Vertical Line */}
+               <div className="absolute top-0 bottom-0 left-[3rem] w-[1px] bg-white/10 dark:bg-black/10 block lg:hidden" />
+               
+               {steps.map((step, i) => (
+                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }} className="relative z-10 flex flex-row lg:flex-col items-center lg:items-center text-left lg:text-center gap-6 lg:gap-0">
+                     <div className="w-[6rem] h-[6rem] sm:w-[8rem] sm:h-[8rem] lg:w-[9rem] lg:h-[9rem] shrink-0 rounded-full bg-white dark:bg-black text-black dark:text-white flex flex-col items-center justify-center lg:mb-10 border-8 border-black dark:border-white shadow-[0_0_40px_rgba(255,255,255,0.05)] dark:shadow-[0_0_40px_rgba(0,0,0,0.05)] relative">
+                        <span className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] opacity-40 mb-1 sm:mb-2">{step.num}</span>
+                        {step.icon}
+                     </div>
+                     <div>
+                        <h3 className="text-2xl sm:text-3xl font-black mb-3">{step.title}</h3>
+                        <p className="text-white/60 dark:text-black/60 leading-relaxed text-base sm:text-lg max-w-xs">{step.desc}</p>
+                     </div>
+                  </motion.div>
+               ))}
+            </div>
+         </div>
+      </section>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-            {[
-              { label: "Engineering Team", value: "15+", suffix: "Top Talent" },
-              { label: "Products", value: "3", suffix: "1 Live, 2 R&D" },
-              { label: "Creators Served", value: "50k+", suffix: "Globally" },
-              { label: "API Processed/mo", value: "10M+", suffix: "Events" }
-            ].map((metric, i) => (
-              <div key={i} className="p-8 rounded-3xl bg-white/5 dark:bg-black/20 border border-black/5 dark:border-white/10 flex flex-col items-center text-center shadow-lg hover:border-primary/50 transition-colors group">
-                <div className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-blue-500 to-primary dark:from-primary dark:to-blue-600 mb-4 group-hover:scale-110 transition-transform duration-500">
-                  {metric.value}
-                </div>
-                <div className="text-foreground font-bold text-lg mb-1">{metric.label}</div>
-                <div className="text-foreground/40 font-mono text-xs uppercase tracking-widest">{metric.suffix}</div>
-              </div>
-            ))}
-          </div>
-        </div>        {/* Tech Section (Proprietary Infrastructure) */}
-        <div className="max-w-7xl mx-auto px-4 w-full mb-40">
-           <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
-              
-              {/* Text Core */}
-              <div className="w-full lg:w-1/2 flex flex-col justify-center">
-                 <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-foreground/5 border border-foreground/10 w-max mb-10">
-                   <div className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_10px_var(--color-primary)]" />
-                   <span className="text-[10px] font-bold text-foreground/60 uppercase tracking-[0.2em]">Core Infrastructure</span>
-                 </div>
-                 
-                 <h2 className="text-5xl lg:text-7xl font-black uppercase tracking-tighter text-foreground leading-[1.05] mb-8">
-                   Engineering<br/>Predictive<br/>Ecosystems
-                 </h2>
-                 
-                 <p className="text-foreground/60 text-lg lg:text-xl font-light leading-relaxed mb-12 max-w-lg">
-                   We are architecting the foundational AI infrastructure that powers Creonnect and our future creator tools. Our proprietary neural networks analyze audience sentiment, predict viral trajectories, and automate community engagement—giving creators an enterprise-grade operating system.
-                 </p>
-                 
-                 {/* Premium Feature Stack */}
-                 <div className="flex flex-col gap-4 w-full max-w-lg">
-                    <div className="group flex items-center justify-between p-5 rounded-2xl bg-foreground/[0.02] border border-foreground/10 hover:bg-foreground/[0.04] hover:border-foreground/20 transition-all duration-300">
-                       <div className="flex items-center gap-5">
-                          <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center border border-blue-500/20 text-blue-500 shadow-[0_0_15px_rgba(59,130,246,0)] group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] transition-shadow">
-                             <span className="font-black text-xs">01</span>
-                          </div>
-                          <span className="font-mono text-sm font-bold text-foreground">Quantum Neural Matrix</span>
-                       </div>
-                       <span className="font-mono text-[10px] text-foreground/40 uppercase tracking-[0.2em]">Active</span>
-                    </div>
+      {/* ==========================================
+          6 & 7. SOCIAL PROOF & TRUST INDICATORS
+          ========================================== */}
+      <section className="py-24 border-b border-black/5 dark:border-white/5 relative overflow-hidden">
+         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-10 text-center border border-black/10 dark:border-white/10 md:border-0 rounded-[2rem] md:rounded-none overflow-hidden bg-black/[0.01] dark:bg-white/[0.01] md:bg-transparent">
+               <div className="p-10 md:p-8 border-b md:border-b-0 md:border-r border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
+                  <ShieldCheck className="w-12 h-12 text-[#7C3AED] mb-6" />
+                  <h3 className="text-5xl font-black mb-3">100%</h3>
+                  <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-black/50 dark:text-white/50">API Compliant</p>
+               </div>
+               <div className="p-10 md:p-8 border-b md:border-b-0 md:border-r border-black/10 dark:border-white/10 flex flex-col items-center justify-center">
+                  <Server className="w-12 h-12 text-[#10B981] mb-6" />
+                  <h3 className="text-5xl font-black mb-3">Tier 1</h3>
+                  <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-black/50 dark:text-white/50">MongoDB Accelerated</p>
+               </div>
+               <div className="p-10 md:p-8 flex flex-col items-center justify-center">
+                  <Lock className="w-12 h-12 text-[#3B82F6] mb-6" />
+                  <h3 className="text-5xl font-black mb-3">E2E</h3>
+                  <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.2em] text-black/50 dark:text-white/50">Encrypted Setup</p>
+               </div>
+            </div>
+         </div>
+      </section>
 
-                    <div className="group flex items-center justify-between p-5 rounded-2xl bg-foreground/[0.02] border border-foreground/10 hover:bg-foreground/[0.04] hover:border-foreground/20 transition-all duration-300">
-                       <div className="flex items-center gap-5">
-                          <div className="w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center border border-amber-500/20 text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0)] group-hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-shadow">
-                             <span className="font-black text-xs">02</span>
-                          </div>
-                          <span className="font-mono text-sm font-bold text-foreground">Predictive Trend Analytics</span>
-                       </div>
-                       <span className="font-mono text-[10px] text-foreground/40 uppercase tracking-[0.2em]">Active</span>
-                    </div>
-
-                    <div className="group flex items-center justify-between p-5 rounded-2xl bg-foreground/[0.02] border border-foreground/10 hover:bg-foreground/[0.04] hover:border-foreground/20 transition-all duration-300">
-                       <div className="flex items-center gap-5">
-                          <div className="w-10 h-10 rounded-full bg-fuchsia-500/10 flex items-center justify-center border border-fuchsia-500/20 text-fuchsia-500 shadow-[0_0_15px_rgba(217,70,239,0)] group-hover:shadow-[0_0_15px_rgba(217,70,239,0.3)] transition-shadow">
-                             <span className="font-black text-xs">03</span>
-                          </div>
-                          <span className="font-mono text-sm font-bold text-foreground">Creonnect OS Integration</span>
-                       </div>
-                       <span className="font-mono text-[10px] text-foreground/40 uppercase tracking-[0.2em]">Active</span>
-                    </div>
-                 </div>
-              </div>
-              
-              {/* Visual Avatar Card (Interactive 3D Component) */}
-              <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-12 lg:mt-0">
-                 <InteractiveAvatar />
-              </div>
-
-           </div>
-        </div>
-
-        {/* Team Teaser (PRD 5.7) */}
-        <div className="max-w-7xl mx-auto px-4 w-full flex flex-col md:flex-row justify-between items-end gap-10 mb-32 border-t border-black/5 dark:border-white/10 pt-20">
-          <div>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-foreground mb-4">The Minds Behind<br />QuantumRealm</h2>
-            <p className="text-foreground/60 text-lg max-w-xl">
-              A multidisciplinary team of engineers, researchers, and designers committed to destroying the boundaries between human intent and machine execution.
+      {/* ==========================================
+          8 & 9. EXCLUSIVE OFFER (Waitlist) & CX UI
+          ========================================== */}
+      <section id="offer" className="py-24 md:py-40 relative overflow-hidden">
+         <div className="absolute inset-0 bg-[#7C3AED]/[0.02] dark:bg-[#7C3AED]/[0.05] pointer-events-none" />
+         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-[900px] text-center relative z-10">
+            
+            <SectionBadge text="Closed Testing Phase Active" />
+            <h2 className="text-[2.5rem] sm:text-5xl md:text-[5rem] font-black tracking-tighter mb-8 leading-[0.95]">
+               Skip the grind. <br/>Enter the Lab.
+            </h2>
+            <p className="text-lg sm:text-2xl text-black/60 dark:text-white/60 mb-12 sm:mb-16 max-w-2xl mx-auto font-light leading-relaxed">
+               We are rigorously onboarding elite creators to our high-availability cluster. Request your early access token today.
             </p>
-          </div>
-          <Link href="/team" className="px-8 py-4 rounded-full bg-primary text-white font-bold tracking-widest uppercase text-sm hover:bg-primary/80 transition-colors shadow-[0_0_20px_rgba(124,58,237,0.4)] flex items-center gap-3 shrink-0">
-            Meet the Full Team &rarr;
-          </Link>
-        </div>
-
-        {/* Careers CTA Block (PRD 5.8) */}
-        <div className="max-w-7xl mx-auto px-4 w-full mb-32">
-          <div className="w-full bg-slate-900 dark:bg-[#050B14] border border-blue-900/30 rounded-[40px] p-10 md:p-20 overflow-hidden relative shadow-2xl">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(59,130,246,0.2)_0%,transparent_60%)]" />
-            <div className="relative z-10 flex flex-col items-center text-center">
-              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-6">Join the Quantum Leap</h2>
-              <p className="text-white/70 text-lg md:text-xl max-w-2xl mb-12">
-                We're looking for world-class engineers, designers, and AI researchers who want to build the future backbone of the creator economy.
-              </p>
-              <Link href="/careers" className="px-10 py-5 rounded-full bg-blue-600 text-white font-black tracking-widest uppercase text-sm hover:bg-blue-500 transition-colors shadow-[0_0_30px_rgba(59,130,246,0.6)] flex items-center gap-3 hover:scale-105 transform duration-300">
-                View Open Roles &rarr;
-              </Link>
+            
+            <div className="bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 p-6 sm:p-10 rounded-[2rem] shadow-2xl relative overflow-hidden">
+               {isWaitlisted ? (
+                  <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center py-10">
+                     <CheckCircle2 className="w-20 h-20 text-[#10B981] mb-6" />
+                     <h3 className="text-2xl sm:text-3xl font-black mb-3">UPLINK SUCCESSFUL</h3>
+                     <p className="text-black/50 dark:text-white/50 font-mono tracking-widest text-sm uppercase">You are on the roster. Check your email.</p>
+                  </motion.div>
+               ) : (
+                  <form className="flex flex-col sm:flex-row gap-4 w-full relative z-10" onSubmit={(e) => { e.preventDefault(); setIsWaitlisted(true); }}>
+                     <div className="relative flex-1 w-full">
+                        <UserCheck className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-black/30 dark:text-white/30" />
+                        <input required type="text" placeholder="Your Instagram Handle (@)" className="w-full min-h-[72px] rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 pl-16 pr-6 focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-all text-lg font-medium placeholder:font-light" />
+                     </div>
+                     <button type="submit" className="w-full sm:w-auto min-h-[72px] px-10 rounded-2xl bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.15em] text-sm sm:text-base hover:scale-[1.02] transition-transform shadow-[0_10px_30px_rgba(124,58,237,0.2)] shrink-0 flex items-center justify-center gap-3">
+                        <Key className="w-5 h-5" /> Secure Spot
+                     </button>
+                  </form>
+               )}
             </div>
-          </div>
-        </div>
+            <p className="text-xs text-black/40 dark:text-white/40 mt-8 font-mono tracking-[0.2em] uppercase">Private Beta • No credit card required.</p>
+         </div>
+      </section>
 
-        <BlogSection />
-        <ContactSection />
+      <TeamSection />
+      <CareersSection />
 
-        {/* PRD 5.10 Footer */}
-        <footer className="w-full pt-20 pb-10 px-8 border-t border-foreground/10 flex flex-col items-center gap-12 text-sm text-foreground/50 bg-background transition-colors duration-500 relative z-40">
-          <div className="w-full max-w-7xl flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
-            <div className="flex flex-col gap-4">
-              <div className="text-xl font-black uppercase tracking-widest text-foreground">QuantumRealm AI Labs</div>
-              <div className="font-mono text-xs">Building the AI Infrastructure for the Creator Economy.</div>
-              <div className="font-mono text-xs mt-2 text-foreground/30 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                HQ: Bengaluru, Karnataka, India
-              </div>
+      {/* ==========================================
+          9. FAQ ACCORDIONS
+          ========================================== */}
+      <section className="py-24 md:py-40 bg-black/[0.02] dark:bg-white/[0.02] border-y border-black/5 dark:border-white/5">
+         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-4xl">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-16 text-center tracking-tight">Technical & Protocol FAQs</h2>
+            <div className="border-t border-black/10 dark:border-white/10">
+               {faqs.map((faq, i) => <FAQItem key={i} index={i} faq={faq} />)}
             </div>
+         </div>
+      </section>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-10 md:gap-16 font-mono text-xs uppercase tracking-widest">
-              <div className="flex flex-col gap-4">
-                <span className="text-foreground font-bold mb-2">Company</span>
-                <Link href="/about" className="hover:text-primary transition-colors">About</Link>
-                <Link href="/team" className="hover:text-primary transition-colors">Team</Link>
-                <Link href="/careers" className="hover:text-primary transition-colors">Careers</Link>
-              </div>
-              <div className="flex flex-col gap-4">
-                <span className="text-foreground font-bold mb-2">Resources</span>
-                <Link href="/press" className="hover:text-primary transition-colors">Press</Link>
-                <Link href="/blog" className="hover:text-primary transition-colors">Blog</Link>
-                <Link href="/contact" className="hover:text-primary transition-colors">Contact</Link>
-              </div>
-              <div className="flex flex-col gap-4 col-span-2 md:col-span-1">
-                <span className="text-foreground font-bold mb-2">Legal</span>
-                <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
-                <Link href="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
-              </div>
+      {/* ==========================================
+          10. FINAL URGENCY CTA
+          ========================================== */}
+      <section className="py-32 md:py-48 bg-black dark:bg-white overflow-hidden relative text-center">
+         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,var(--color-primary)_0%,transparent_60%)] opacity-30 dark:opacity-[0.15] pointer-events-none" />
+         <div className="container mx-auto px-4 text-white dark:text-black relative z-10 flex flex-col items-center">
+            <h2 className="text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter mb-12 sm:mb-16 leading-[0.85]">
+               Scale <span className="opacity-80 italic">Without</span><br/> Limits.
+            </h2>
+            <a href="#offer" className="inline-flex w-full sm:w-auto min-h-[72px] px-12 sm:px-16 rounded-full bg-white dark:bg-black text-black dark:text-white font-black uppercase tracking-[0.2em] text-sm sm:text-base items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(255,255,255,0.15)] dark:shadow-[0_0_60px_rgba(0,0,0,0.15)] group">
+               Initialize Sequence <ArrowRight className="w-6 h-6 animate-pulse group-hover:translate-x-2 transition-transform" />
+            </a>
+         </div>
+      </section>
+
+      {/* ==========================================
+          11. FINAL FOOTER ROUTING
+          ========================================== */}
+      <footer className="py-16 bg-white dark:bg-black border-t border-black/10 dark:border-white/10">
+         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+            <div className="flex flex-col items-center md:items-start gap-4">
+               <Link href="/" className="group hover:opacity-80 transition-opacity">
+                 <Logo size="md" />
+               </Link>
+               <p className="text-sm font-mono tracking-widest text-black/40 dark:text-white/40 uppercase mt-2">© 2026 Engine Protocols.</p>
             </div>
-          </div>
-
-          <div className="w-full max-w-7xl border-t border-foreground/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 font-mono text-xs uppercase tracking-[0.2em] text-foreground/30">
-            <div>&copy; 2026 QuantumRealm AI Labs Pvt. Ltd. All rights reserved.</div>
-            <div className="flex items-center gap-8">
-              <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:text-blue-400 font-bold transition-colors">Flagship: Creonnect</a>
-              <div className="flex gap-6">
-                <a href="https://linkedin.com/company/quantumrealm" className="hover:text-foreground transition-colors">LinkedIn</a>
-                <a href="https://x.com/quantumrealm" className="hover:text-foreground transition-colors">X (Twitter)</a>
-                <a href="https://instagram.com/quantumrealm" className="hover:text-foreground transition-colors">Instagram</a>
-              </div>
+            
+            <div className="flex flex-wrap justify-center gap-6 sm:gap-10 font-bold text-xs sm:text-sm uppercase tracking-[0.1em] text-black/60 dark:text-white/60">
+               <Link href="/about" className="hover:text-black dark:hover:text-white transition-colors">Mission</Link>
+               <Link href="/team" className="hover:text-black dark:hover:text-white transition-colors">Team</Link>
+               <Link href="/careers" className="hover:text-black dark:hover:text-white transition-colors">Careers</Link>
+               <Link href="/lab" className="hover:text-black dark:hover:text-white transition-colors">Lab Insights</Link>
+               <Link href="/contact" className="hover:text-black dark:hover:text-white transition-colors">Contact</Link>
             </div>
-          </div>
-        </footer>
+         </div>
+      </footer>
 
-      </motion.div>
-
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .border-text {
-          -webkit-text-stroke: 1px var(--foreground);
-          color: transparent;
-        }
-        .border-text-muted {
-          -webkit-text-stroke: 1px color-mix(in srgb, var(--foreground), transparent 80%);
-          color: transparent;
-        }
-      `}} />
-
-    </div>
+    </main>
   );
 }

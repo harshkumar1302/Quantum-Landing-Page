@@ -6,25 +6,18 @@ import { ArrowRight, MapPin, Zap } from "lucide-react";
 export default function CareersPage() {
   const jobs = [
     {
-       title: "Neural Network Architect",
-       department: "Intelligence Lab",
+       title: "UI Engineer Intern",
+       department: "Engineering Lab",
        location: "Remote / Bengaluru",
-       level: "Senior / Staff",
-       type: "Full-time"
+       level: "Intern",
+       type: "Internship"
     },
     {
-       title: "Distributed Systems Engineer",
-       department: "Infrastructure",
+       title: "Social Media Creator",
+       department: "Marketing Lab",
        location: "Remote",
-       level: "Senior",
-       type: "Full-time"
-    },
-    {
-       title: "Generative UI Designer",
-       department: "Design Lab",
-       location: "Remote / Mumbai",
-       level: "Lead",
-       type: "Contract / Full-time"
+       level: "Freelance / Contract",
+       type: "Contract"
     }
   ];
 
