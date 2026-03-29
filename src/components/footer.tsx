@@ -26,6 +26,7 @@ export function Footer() {
              <h4 className="font-bold text-foreground mb-2">Company</h4>
              <Link href="/products" className="text-sm hover:text-primary transition-colors hover:translate-x-1 inline-block w-max">Products</Link>
              <Link href="/about" className="text-sm hover:text-primary transition-colors hover:translate-x-1 inline-block w-max">About</Link>
+
              <Link href="/team" className="text-sm hover:text-primary transition-colors hover:translate-x-1 inline-block w-max">Team</Link>
              <Link href="/careers" className="text-sm hover:text-primary transition-colors hover:translate-x-1 inline-block w-max">Careers</Link>
              <Link href="/lab" className="text-sm hover:text-primary transition-colors hover:translate-x-1 inline-block w-max">Lab</Link>
@@ -35,10 +36,15 @@ export function Footer() {
           {/* Column 3: Products */}
           <div className="flex flex-col space-y-3">
              <h4 className="font-bold text-foreground mb-2">Products</h4>
-             <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors hover:translate-x-1 inline-block w-max flex items-center gap-2">
-                Creonnect
-                <span className="px-1.5 py-0.5 rounded text-[8px] uppercase tracking-wider bg-green-500/10 text-green-500 font-bold">Live</span>
-             </a>
+              <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors hover:translate-x-1 inline-flex items-center gap-3 group w-max">
+                 <div className="w-5 h-5 rounded-md overflow-hidden border border-white/10 bg-zinc-900 shrink-0">
+                    <img src="/images/products/creonnect-logo.jpg" alt="" className="w-full h-full object-cover" />
+                 </div>
+                 <div className="flex items-center gap-2">
+                    <span className="font-medium">Creonnect</span>
+                    <span className="px-1.5 py-0.5 rounded text-[8px] uppercase tracking-wider bg-green-500/10 text-green-500 font-bold shrink-0">Live</span>
+                 </div>
+              </a>
              <span className="text-sm text-foreground/40 cursor-not-allowed">More Coming Soon</span>
           </div>
 

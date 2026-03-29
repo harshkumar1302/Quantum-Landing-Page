@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { Loader } from "@/components/loader";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { TorchCursor } from "@/components/torch-cursor";
 
 
 
@@ -27,15 +28,6 @@ export const metadata: Metadata = {
     "AI Creator OS", "Instagram Growth Platform", "AI Agency Solutions", "Brand Automation AI",
     "Creonnect", "Quantum Engine API", "Creator Economy Infrastructure", "Predictive AI Ecosystems", "Automated DMs"
   ],
-  icons: {
-    icon: "/logo.png",
-    shortcut: "/logo.png",
-    apple: "/logo.png",
-    other: {
-      rel: "apple-touch-icon-precomposed",
-      url: "/logo.png",
-    },
-  },
   openGraph: {
     title: "QuantumRealm AI Labs",
     description: "Building the AI infrastructure powering the next era of creators, including Creonnect.",
@@ -43,10 +35,10 @@ export const metadata: Metadata = {
     siteName: "QuantumRealm AI Labs",
     images: [
       {
-        url: "/logo.png",
+        url: "/images/products/creonnect-ui.png",
         width: 1200,
         height: 630,
-        alt: "QuantumRealm AI Labs Logo",
+        alt: "QuantumRealm AI Labs - Building the Creator OS",
       },
     ],
   },
@@ -54,7 +46,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "QuantumRealm AI Labs",
     description: "Engineering generative UI and predictive ecosystems for the creator economy.",
-    images: ["/logo.png"],
+    images: ["/images/products/creonnect-ui.png"],
   }
 };
 
@@ -76,6 +68,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
+          <TorchCursor />
           <div className="noise-overlay" />
           <Loader />
           <Navbar />

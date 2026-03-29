@@ -41,7 +41,7 @@ export function MetricsSection() {
     { label: "Products Live", value: 1, suffix: "", duration: 1, link: "/products" },
     { label: "Products in R&D", value: 2, suffix: "", duration: 1.5, tooltip: "We're always building", link: null },
     { label: "Creators on Waitlist", value: 10000, suffix: "+", duration: 2.5, link: "https://creonnect.com" },
-    { label: "Team Members", value: 15, suffix: "+", duration: 1.5, link: "/team" },
+
     { label: "Lines of Code Shipped", value: 200000, suffix: "+", duration: 3, link: null },
     { label: "AI Models in Production", value: 4, suffix: "", duration: 1, tooltip: "NLP, Vision, Time-Series, Scoring", link: null },
     { label: "API Calls Processed / Mo", value: 1000000, suffix: "+", duration: 2.5, link: null },

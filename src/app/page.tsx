@@ -8,7 +8,6 @@ import {
   MessageSquare, UserCheck, Key, Lock, Minus, Code2, Globe, Server, CheckCircle2
 } from "lucide-react";
 import { Logo } from "@/components/logo";
-import { TeamSection } from "@/components/team-section";
 import { CareersSection } from "@/components/careers-section";
 
 /** =======================================================
@@ -17,21 +16,25 @@ import { CareersSection } from "@/components/careers-section";
 
 const features = [
   { 
+    color: "#7C3AED",
     icon: <MessageSquare className="w-6 h-6 text-[#7C3AED]" />, 
     title: "Neuro-Linguistic DMs", 
     desc: "AI that understands context, tone, and intent with 99.9% accuracy. It mimics your exact syntax to close thousands of leads while you sleep." 
   },
   { 
+    color: "#3B82F6",
     icon: <TrendingUp className="w-6 h-6 text-[#3B82F6]" />, 
     title: "Predictive Analytics", 
     desc: "Stop guessing. Track historical engagement velocities to know exactly when and what to post for maximum algorithmic reach." 
   },
   { 
+    color: "#10B981",
     icon: <Database className="w-6 h-6 text-[#10B981]" />, 
     title: "MongoDB Accelerated", 
     desc: "Built on deeply scalable, distributed data structures. We process 10M+ webhook events securely every single day." 
   },
   { 
+    color: "#EC4899",
     icon: <Infinity className="w-6 h-6 text-[#EC4899]" />, 
     title: "Infinite Parallel Routing", 
     desc: "Engage with 10,000 followers simultaneously without ever hitting conversational rate limits. Scale without the sandbox." 
@@ -39,9 +42,9 @@ const features = [
 ];
 
 const steps = [
-  { num: "01", icon: <Globe />, title: "Connect", desc: "Securely link your Instagram account via official 100% compliant APIs." },
-  { num: "02", icon: <Code2 />, title: "Train", desc: "Provide your brand voice. The Quantum Engine maps your historical tone." },
-  { num: "03", icon: <Zap />, title: "Scale", desc: "Turn on the OS. Watch your engagement and lead generation scale infinitely." },
+  { num: "01", icon: <Globe />, title: "Connect", desc: "Securely link your Instagram account via official 100% compliant APIs.", color: "#3B82F6" },
+  { num: "02", icon: <Code2 />, title: "Train", desc: "Provide your brand voice. The Quantum Engine maps your historical tone.", color: "#EC4899" },
+  { num: "03", icon: <Zap />, title: "Scale", desc: "Turn on the OS. Watch your engagement and lead generation scale infinitely.", color: "#10B981" },
 ];
 
 const faqs = [
@@ -139,7 +142,7 @@ export default function Home() {
                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 1 }}
                className="text-lg md:text-2xl font-light text-black/60 dark:text-white/60 max-w-3xl leading-relaxed mb-12 sm:px-4"
             >
-               Stop capping your revenue with manual DMs. Creonnect is the autonomous AI operating system that manages your community growth 24/7 without breaking a sweat.
+               Stop capping your revenue with manual DMs. <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">Creonnect</a> is the autonomous AI operating system that manages your community growth 24/7 without breaking a sweat.
             </motion.p>
 
             {/* Hyper-Optimized CTA Flow */}
@@ -162,7 +165,7 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
                
                {/* High-Friction Problem Block */}
-               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-8 sm:p-12 rounded-[2rem] border border-red-500/20 bg-red-500/5 relative overflow-hidden group">
+               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} data-torch-color="#EF4444" className="p-8 sm:p-12 rounded-[2rem] border border-red-500/20 bg-red-500/5 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-red-500 opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-1000" />
                   <SectionBadge text="The Human Bottleneck" colorHex="#EF4444" />
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.1] mb-6">Humans break at scale.</h2>
@@ -177,12 +180,12 @@ export default function Home() {
                </motion.div>
 
                {/* Autonomous Solution Block */}
-               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="p-8 sm:p-12 rounded-[2rem] border border-[#10B981]/30 bg-[#10B981]/5 relative overflow-hidden group">
+               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} data-torch-color="#10B981" className="p-8 sm:p-12 rounded-[2rem] border border-[#10B981]/30 bg-[#10B981]/5 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981] opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-1000" />
                   <SectionBadge text="The Quantum Ecosystem" colorHex="#10B981" />
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.1] mb-6">Algorithms scale infinitely.</h2>
                   <p className="text-lg text-black/60 dark:text-white/60 leading-relaxed font-light mb-8">
-                     Creonnect replaces rote repetition with predictive AI agents. We handle DMs, analytics, and community management continuously—deploying the exact tone of your brand perfectly safely.
+                     <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">Creonnect</a> replaces rote repetition with predictive AI agents. We handle DMs, analytics, and community management continuously—deploying the exact tone of your brand perfectly safely.
                   </p>
                   <ul className="space-y-4 font-mono text-sm sm:text-base opacity-90 border-l border-[#10B981]/50 pl-6">
                      <li className="flex items-center gap-3"><span className="text-[#10B981] font-bold">✓</span> Contextual auto-closing of leads in DMs.</li>
@@ -217,6 +220,7 @@ export default function Home() {
                {features.map((feat, i) => (
                   <motion.div 
                      key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ delay: i * 0.1, duration: 0.5 }}
+                     data-torch-color={feat.color}
                      className="p-8 sm:p-12 rounded-[2rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 group relative overflow-hidden"
                   >
                      {/* Hover Glow */}
@@ -236,7 +240,7 @@ export default function Home() {
       {/* ==========================================
           5. HOW IT WORKS (Deployment Flow)
           ========================================== */}
-      <section className="py-24 md:py-40 bg-black dark:bg-white text-white dark:text-black">
+      <section data-theme-section="inverted" className="py-24 md:py-40 bg-black dark:bg-white text-white dark:text-black">
          <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
             <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-black uppercase tracking-tighter mb-16 md:mb-32 text-center leading-[0.9]">
                Deployment Protocol
@@ -249,7 +253,7 @@ export default function Home() {
                <div className="absolute top-0 bottom-0 left-[3rem] w-[1px] bg-white/10 dark:bg-black/10 block lg:hidden" />
                
                {steps.map((step, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }} className="relative z-10 flex flex-row lg:flex-col items-center lg:items-center text-left lg:text-center gap-6 lg:gap-0">
+                  <motion.div key={i} data-torch-color={step.color} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }} className="relative z-10 flex flex-row lg:flex-col items-center lg:items-center text-left lg:text-center gap-6 lg:gap-0 cursor-crosshair">
                      <div className="w-[6rem] h-[6rem] sm:w-[8rem] sm:h-[8rem] lg:w-[9rem] lg:h-[9rem] shrink-0 rounded-full bg-white dark:bg-black text-black dark:text-white flex flex-col items-center justify-center lg:mb-10 border-8 border-black dark:border-white shadow-[0_0_40px_rgba(255,255,255,0.05)] dark:shadow-[0_0_40px_rgba(0,0,0,0.05)] relative">
                         <span className="text-xs sm:text-sm font-black uppercase tracking-[0.2em] opacity-40 mb-1 sm:mb-2">{step.num}</span>
                         {step.icon}
@@ -327,7 +331,7 @@ export default function Home() {
          </div>
       </section>
 
-      <TeamSection />
+
       <CareersSection />
 
       {/* ==========================================
@@ -345,7 +349,7 @@ export default function Home() {
       {/* ==========================================
           10. FINAL URGENCY CTA
           ========================================== */}
-      <section className="py-32 md:py-48 bg-black dark:bg-white overflow-hidden relative text-center">
+      <section data-theme-section="inverted" className="py-32 md:py-48 bg-black dark:bg-white overflow-hidden relative text-center">
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,var(--color-primary)_0%,transparent_60%)] opacity-30 dark:opacity-[0.15] pointer-events-none" />
          <div className="container mx-auto px-4 text-white dark:text-black relative z-10 flex flex-col items-center">
             <h2 className="text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter mb-12 sm:mb-16 leading-[0.85]">
@@ -357,27 +361,6 @@ export default function Home() {
          </div>
       </section>
 
-      {/* ==========================================
-          11. FINAL FOOTER ROUTING
-          ========================================== */}
-      <footer className="py-16 bg-white dark:bg-black border-t border-black/10 dark:border-white/10">
-         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-            <div className="flex flex-col items-center md:items-start gap-4">
-               <Link href="/" className="group hover:opacity-80 transition-opacity">
-                 <Logo size="md" />
-               </Link>
-               <p className="text-sm font-mono tracking-widest text-black/40 dark:text-white/40 uppercase mt-2">© 2026 Engine Protocols.</p>
-            </div>
-            
-            <div className="flex flex-wrap justify-center gap-6 sm:gap-10 font-bold text-xs sm:text-sm uppercase tracking-[0.1em] text-black/60 dark:text-white/60">
-               <Link href="/about" className="hover:text-black dark:hover:text-white transition-colors">Mission</Link>
-               <Link href="/team" className="hover:text-black dark:hover:text-white transition-colors">Team</Link>
-               <Link href="/careers" className="hover:text-black dark:hover:text-white transition-colors">Careers</Link>
-               <Link href="/lab" className="hover:text-black dark:hover:text-white transition-colors">Lab Insights</Link>
-               <Link href="/contact" className="hover:text-black dark:hover:text-white transition-colors">Contact</Link>
-            </div>
-         </div>
-      </footer>
 
     </main>
   );

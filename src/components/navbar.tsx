@@ -74,8 +74,8 @@ export function Navbar() {
                    >
                       <div className="absolute inset-0 bg-gradient-to-tr from-[#7C3AED]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#7C3AED] to-[#5B21B6] shrink-0 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-                         <span className="text-white font-black text-2xl">C</span>
+                      <div className="w-14 h-14 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900">
+                         <img src="/images/products/creonnect-logo.jpg" alt="Creonnect Logo" className="w-full h-full object-cover" />
                       </div>
                       <div className="relative z-10">
                          <h4 className="font-bold text-base group-hover:text-primary flex items-center gap-3 transition-colors duration-300">
@@ -101,7 +101,7 @@ export function Navbar() {
           </div>
 
           <Link href="/about" className="hover:text-primary transition-colors py-2">About</Link>
-          <Link href="/team" className="hover:text-primary transition-colors py-2">Team</Link>
+
           <Link href="/careers" className="hover:text-primary transition-colors py-2">Careers</Link>
           <Link href="/lab" className="hover:text-primary transition-colors py-2">Lab</Link>
           <Link href="/contact" className="hover:text-primary transition-colors py-2">Contact</Link>
@@ -163,7 +163,9 @@ export function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 hover:text-primary transition-colors"
               >
-                 <div className="w-8 h-8 rounded-lg bg-[#7C3AED] flex items-center justify-center text-white text-sm">C</div>
+                 <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900">
+                    <img src="/images/products/creonnect-logo.jpg" alt="Creonnect Logo" className="w-full h-full object-cover" />
+                 </div>
                  Creonnect
               </Link>
             </div>
@@ -171,7 +173,7 @@ export function Navbar() {
             <div className="h-px w-full bg-black/10 dark:bg-white/10" />
 
             <Link href="/about" onClick={() => setIsOpen(false)} className="hover:text-primary">About</Link>
-            <Link href="/team" onClick={() => setIsOpen(false)} className="hover:text-primary">Team</Link>
+
             <Link href="/careers" onClick={() => setIsOpen(false)} className="hover:text-primary">Careers</Link>
             <Link href="/lab" onClick={() => setIsOpen(false)} className="hover:text-primary">Lab</Link>
             <Link href="/contact" onClick={() => setIsOpen(false)} className="hover:text-primary">Contact</Link>
