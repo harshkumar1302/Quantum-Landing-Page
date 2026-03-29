@@ -40,16 +40,20 @@ export function Logo({ className = "", size = "md", withGraphic = true }: LogoPr
       {/* Premium SVG Abstract Q Icon */}
       {withGraphic && (
         <div className={`${s.graphic} shrink-0 bg-gradient-to-br from-[#7C3AED]/20 to-[#06B6D4]/20 rounded-md sm:rounded-lg border border-white/20 dark:border-white/10 flex items-center justify-center p-1.5 relative shadow-[0_0_15px_rgba(124,58,237,0.15)] mr-3 overflow-hidden backdrop-blur-md`}>
-           <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full relative z-10 drop-shadow-sm">
-              <circle cx="11.5" cy="11.5" r="7" stroke="url(#paint0_linear)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M16.5 16.5L21 21" stroke="url(#paint0_linear)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-              <defs>
-                <linearGradient id="paint0_linear" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#7C3AED" />
-                  <stop offset="1" stopColor="#06B6D4" />
-                </linearGradient>
-              </defs>
-           </svg>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full relative z-10 drop-shadow-sm">
+               {/* Core Node */}
+               <circle cx="12" cy="12" r="3.5" fill="url(#paint0_linear)" className="animate-pulse" />
+               {/* Orbiting Ring 1 */}
+               <circle cx="12" cy="12" r="8" stroke="url(#paint0_linear)" strokeWidth="1.5" strokeDasharray="4 4" className="opacity-60" />
+               {/* Orbiting Ring 2 */}
+               <rect x="5" y="5" width="14" height="14" rx="2" stroke="url(#paint0_linear)" strokeWidth="1" className="opacity-30 rotate-45 origin-center" />
+               <defs>
+                 <linearGradient id="paint0_linear" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                   <stop stopColor="#7C3AED" />
+                   <stop offset="1" stopColor="#06B6D4" />
+                 </linearGradient>
+               </defs>
+            </svg>
         </div>
       )}
 

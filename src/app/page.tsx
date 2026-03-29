@@ -296,43 +296,7 @@ export default function Home() {
       {/* ==========================================
           8 & 9. EXCLUSIVE OFFER (Waitlist) & CX UI
           ========================================== */}
-      <section id="offer" className="py-24 md:py-40 relative overflow-hidden">
-         <div className="absolute inset-0 bg-[#7C3AED]/[0.02] dark:bg-[#7C3AED]/[0.05] pointer-events-none" />
-         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-[900px] text-center relative z-10">
-            
-            <SectionBadge text="Closed Testing Phase Active" />
-            <h2 className="text-[2.5rem] sm:text-5xl md:text-[5rem] font-black tracking-tighter mb-8 leading-[0.95]">
-               Skip the grind. <br/>Enter the Lab.
-            </h2>
-            <p className="text-lg sm:text-2xl text-black/60 dark:text-white/60 mb-12 sm:mb-16 max-w-2xl mx-auto font-light leading-relaxed">
-               We are rigorously onboarding elite creators to our high-availability cluster. Request your early access token today.
-            </p>
-            
-            <div className="bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 p-6 sm:p-10 rounded-[2rem] shadow-2xl relative overflow-hidden">
-               {isWaitlisted ? (
-                  <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center justify-center py-10">
-                     <CheckCircle2 className="w-20 h-20 text-[#10B981] mb-6" />
-                     <h3 className="text-2xl sm:text-3xl font-black mb-3">UPLINK SUCCESSFUL</h3>
-                     <p className="text-black/50 dark:text-white/50 font-mono tracking-widest text-sm uppercase">You are on the roster. Check your email.</p>
-                  </motion.div>
-               ) : (
-                  <form className="flex flex-col sm:flex-row gap-4 w-full relative z-10" onSubmit={(e) => { e.preventDefault(); setIsWaitlisted(true); }}>
-                     <div className="relative flex-1 w-full">
-                        <UserCheck className="absolute left-6 top-1/2 -translate-y-1/2 w-6 h-6 text-black/30 dark:text-white/30" />
-                        <input required type="text" placeholder="Your Instagram Handle (@)" className="w-full min-h-[72px] rounded-2xl bg-black/[0.02] dark:bg-white/[0.03] border border-black/10 dark:border-white/10 pl-16 pr-6 focus:outline-none focus:border-[#7C3AED] focus:ring-1 focus:ring-[#7C3AED] transition-all text-lg font-medium placeholder:font-light" />
-                     </div>
-                     <button type="submit" className="w-full sm:w-auto min-h-[72px] px-10 rounded-2xl bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.15em] text-sm sm:text-base hover:scale-[1.02] transition-transform shadow-[0_10px_30px_rgba(124,58,237,0.2)] shrink-0 flex items-center justify-center gap-3">
-                        <Key className="w-5 h-5" /> Secure Spot
-                     </button>
-                  </form>
-               )}
-            </div>
-            <p className="text-xs text-black/40 dark:text-white/40 mt-8 font-mono tracking-[0.2em] uppercase">Private Beta • No credit card required.</p>
-         </div>
-      </section>
 
-
-      <CareersSection />
 
       {/* ==========================================
           9. FAQ ACCORDIONS
