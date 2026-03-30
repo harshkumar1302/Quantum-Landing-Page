@@ -23,6 +23,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "QuantumRealm AI Labs | AI-Powered Creator Operating Systems",
+  icons: {
+    icon: "/icon.svg",
+  },
   description: "The premier AI lab engineering predictive infrastructure and operating systems like Creonnect for creators, brands, and agencies to automate Instagram growth, DMs, and community management.",
   keywords: [
     "AI Creator OS", "Instagram Growth Platform", "AI Agency Solutions", "Brand Automation AI",

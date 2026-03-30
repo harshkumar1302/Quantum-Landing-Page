@@ -38,7 +38,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a, button {
+a, 
+button, 
+[role="button"], 
+input[type="submit"], 
+input[type="button"], 
+input[type="reset"], 
+input[type="checkbox"], 
+input[type="radio"], 
+select, 
+label {
   cursor: pointer;
 }
 

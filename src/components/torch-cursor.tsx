@@ -65,20 +65,37 @@ export function TorchCursor() {
       const target = e.target as HTMLElement;
       if (!target?.closest) return;
       
-      const torchTarget = target.closest("[data-torch-color]") as HTMLElement;
-      if (torchTarget) {
+      // Look for ANY interactive element
+      const interactiveTarget = target.closest('a, button, [role="button"], [data-torch-color]') as HTMLElement;
+      
+      if (interactiveTarget) {
         setIsHovering(true);
-        const color = torchTarget.getAttribute("data-torch-color") || "#10B981";
-        const rect = torchTarget.getBoundingClientRect();
+        const rect = interactiveTarget.getBoundingClientRect();
+        const color = interactiveTarget.getAttribute("data-torch-color") || "#7C3AED"; // Default to brand purple
         
         setHoverColor(color);
         setHoverRect({ x: rect.left, y: rect.top, w: rect.width, h: rect.height });
 
-        // MAGNET SNAP: Particles fly to the 4 boundary corners of the interactive element
-        p1tx.set(rect.left);       p1ty.set(rect.top);
-        p2tx.set(rect.right);      p2ty.set(rect.top);
-        p3tx.set(rect.right);      p3ty.set(rect.bottom);
-        p4tx.set(rect.left);       p4ty.set(rect.bottom);
+        // SIZE-AWARE REACTION: 
+        // Large cards/sections get the Corner Snap. 
+        // Small links/buttons get a high-density Centered Swell.
+        const isSmallElement = rect.width < 120;
+        
+        if (isSmallElement) {
+           // SWELL: All particles target the center with slight variety
+           const centerX = rect.left + rect.width / 2;
+           const centerY = rect.top + rect.height / 2;
+           p1tx.set(centerX); p1ty.set(centerY);
+           p2tx.set(centerX); p2ty.set(centerY);
+           p3tx.set(centerX); p3ty.set(centerY);
+           p4tx.set(centerX); p4ty.set(centerY);
+        } else {
+           // SNAP: Particles fly to the 4 boundary corners
+           p1tx.set(rect.left);       p1ty.set(rect.top);
+           p2tx.set(rect.right);      p2ty.set(rect.top);
+           p3tx.set(rect.right);      p3ty.set(rect.bottom);
+           p4tx.set(rect.left);       p4ty.set(rect.bottom);
+        }
       } else {
         setIsHovering(false);
         setHoverRect(null);
@@ -95,7 +112,7 @@ export function TorchCursor() {
       window.removeEventListener("mousemove", manageMouseMove);
       document.removeEventListener("mouseover", manageMouseOver);
     };
-  }, [isHovering, mouseX, mouseY]);
+  }, [isHovering, mouseX, mouseY, theme]);
 
   // NEVER return null early to ensure Hook consistency across hydration
   if (!mounted) return null;
