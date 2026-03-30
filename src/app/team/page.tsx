@@ -9,31 +9,31 @@ const team = [
     name: "Dheerendra",
     role: "Founder / CEO",
     description: "Leads product vision. Who knows exactly what's broken and how to fix it.",
-    image: "/images/dheerendra.jpg",
+    image: "/images/dheerendra.webp",
   },
   {
     name: "Krishna",
     role: "Co-Founder / Director of Engineering",
     description: "The engine behind the engine. Architects everything that runs under the hood.",
-    image: "/images/krishna.jpg",
+    image: "/images/krishna.webp",
   },
   {
     name: "Ayush",
     role: "Co-Founder / CTO",
     description: "The backbone. Builds and owns everything that runs behind the scenes.",
-    image: "/images/ayush.jpg",
+    image: "/images/ayush.webp",
   },
   {
     name: "Sharath",
     role: "Founding AI Engineer",
     description: "Teaches the machine how to think. The AI layer is entirely his.",
-    image: "/images/sharath.jpg",
+    image: "/images/sharath.webp",
   },
   {
     name: "Harsh",
     role: "Growth / Marketing",
     description: "The growth brain. Making sure the right people hear about Creonnect at the right time.",
-    image: "/images/harsh.jpg",
+    image: "/images/harsh.webp",
   }
 ];
 

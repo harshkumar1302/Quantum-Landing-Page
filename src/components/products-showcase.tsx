@@ -130,7 +130,7 @@ export function ProductsShowcase() {
               <TiltCard className="flex-1 bg-gradient-to-br from-blue-500/10 to-transparent border border-blue-500/20 p-8 flex flex-col">
                  <div style={{ transform: "translateZ(30px)" }}>
                     <div className="w-12 h-12 rounded-xl overflow-hidden border border-blue-500/30 flex items-center justify-center mb-6 bg-white dark:bg-zinc-900">
-                       <img src="/images/products/creonnect-logo.jpg" alt="Creonnect Logo" className="w-full h-full object-cover" />
+                       <img src="/images/products/creonnect-logo.webp" alt="Creonnect Logo" className="w-full h-full object-cover" />
                     </div>
                     <span className="px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest bg-blue-500/20 text-blue-400 mb-4 inline-block">Flagship App</span>
                     <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="group/title block">

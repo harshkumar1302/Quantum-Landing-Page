@@ -75,7 +75,7 @@ export function Navbar() {
                       <div className="absolute inset-0 bg-gradient-to-tr from-[#7C3AED]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
                       <div className="w-14 h-14 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900">
-                         <img src="/images/products/creonnect-logo.jpg" alt="Creonnect Logo" className="w-full h-full object-cover" />
+                         <img src="/images/products/creonnect-logo.webp" alt="Creonnect Logo" className="w-full h-full object-cover" />
                       </div>
                       <div className="relative z-10">
                          <h4 className="font-bold text-base group-hover:text-primary flex items-center gap-3 transition-colors duration-300">
@@ -164,7 +164,7 @@ export function Navbar() {
                 className="flex items-center gap-3 hover:text-primary transition-colors"
               >
                  <div className="w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900">
-                    <img src="/images/products/creonnect-logo.jpg" alt="Creonnect Logo" className="w-full h-full object-cover" />
+                    <img src="/images/products/creonnect-logo.webp" alt="Creonnect Logo" className="w-full h-full object-cover" />
                  </div>
                  Creonnect
               </Link>
