@@ -22,36 +22,59 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "QuantumRealm AI Labs | AI-Powered Creator Operating Systems",
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/icon.png",
+  metadataBase: new URL("https://quantumrealm.ai"),
+  title: {
+    default: "QuantumRealm AI Labs | The Creator AI Operating System",
+    template: "%s | QuantumRealm AI Labs"
   },
-  description: "The premier AI lab engineering predictive infrastructure and operating systems like Creonnect for creators, brands, and agencies to automate Instagram growth, DMs, and community management.",
+  description: "QuantumRealm AI Labs engineers the world's most sophisticated AI operating systems for the creator economy. Powering elite creators through autonomous DM management, predictive growth analytics, and decentralized infrastructure.",
   keywords: [
-    "AI Creator OS", "Instagram Growth Platform", "AI Agency Solutions", "Brand Automation AI",
-    "Creonnect", "Quantum Engine API", "Creator Economy Infrastructure", "Predictive AI Ecosystems", "Automated DMs"
+    "QuantumRealm AI Labs", "Creonnect AI", "Creator Operating System", "Autonomous AI Growth",
+    "Predictive Creator Analytics", "AI Infrastructure for Brands", "Generative Engagement OS",
+    "Social Media AI Automation", "Elite Creator Tools"
   ],
+  authors: [{ name: "QuantumRealm AI Labs" }],
+  creator: "QuantumRealm AI Labs",
+  publisher: "QuantumRealm AI Labs",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
   openGraph: {
-    title: "QuantumRealm AI Labs",
-    description: "Building the AI infrastructure powering the next era of creators, including Creonnect.",
-    type: "website",
+    title: "QuantumRealm AI Labs | Engineering the Future of Interaction",
+    description: "Discover the autonomous AI operating systems powering the next generation of digital-first economies.",
+    url: "https://quantumrealm.ai",
     siteName: "QuantumRealm AI Labs",
+    locale: "en_US",
+    type: "website",
     images: [
       {
-        url: "/images/products/creonnect-ui.png",
+        url: "/images/og-main.png",
         width: 1200,
         height: 630,
-        alt: "QuantumRealm AI Labs - Building the Creator OS",
+        alt: "QuantumRealm AI Labs - The Silicon Backbone of the Creator Economy",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "QuantumRealm AI Labs",
-    description: "Engineering generative UI and predictive ecosystems for the creator economy.",
-    images: ["/images/products/creonnect-ui.png"],
-  }
+    description: "The autonomous AI operating system designed for elite creators.",
+    images: ["/images/og-main.png"],
+    creator: "@QuantumRealmAI",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

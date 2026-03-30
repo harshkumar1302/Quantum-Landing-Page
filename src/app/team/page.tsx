@@ -10,30 +10,35 @@ const team = [
     role: "Founder / CEO",
     description: "Leads product vision. Who knows exactly what's broken and how to fix it.",
     image: "/images/dheerendra.webp",
+    linkedin: "https://linkedin.com/in/dheerendra"
   },
   {
     name: "Krishna",
     role: "Co-Founder / Director of Engineering",
     description: "The engine behind the engine. Architects everything that runs under the hood.",
     image: "/images/krishna.webp",
+    linkedin: "https://linkedin.com/in/krishna"
   },
   {
     name: "Ayush",
     role: "Co-Founder / CTO",
     description: "The backbone. Builds and owns everything that runs behind the scenes.",
     image: "/images/ayush.webp",
+    linkedin: "https://linkedin.com/in/ayush"
   },
   {
     name: "Sharath",
     role: "Founding AI Engineer",
     description: "Teaches the machine how to think. The AI layer is entirely his.",
     image: "/images/sharath.webp",
+    linkedin: "https://linkedin.com/in/sharath"
   },
   {
     name: "Harsh",
     role: "Growth / Marketing",
     description: "The growth brain. Making sure the right people hear about Creonnect at the right time.",
     image: "/images/harsh.webp",
+    linkedin: "https://linkedin.com/in/harsh"
   }
 ];
 
@@ -108,9 +113,14 @@ function KineticTeamCard({ member, index }: { member: any; index: number }) {
             />
             {/* Overlay Gradient on Hover */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white ml-auto">
+                <a 
+                  href={member.linkedin} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white ml-auto hover:bg-[#7C3AED] hover:border-[#7C3AED] transition-all duration-300 transform hover:scale-110 active:scale-95"
+                >
                     <Linkedin className="w-4 h-4" />
-                </div>
+                </a>
             </div>
           </div>
         </div>
@@ -190,6 +200,29 @@ export default function TeamPage() {
             <KineticTeamCard key={i} member={member} index={i} />
           ))}
         </div>
+
+        {/* "Join Us" CTA */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-32 md:mt-48 text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 mb-8 backdrop-blur-sm">
+            <div className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">Building the Future</span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black mb-8">Want to join the <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] to-[#3B82F6]">Quantum Node</span>?</h2>
+          <p className="text-lg text-black/60 dark:text-white/60 mb-12 max-w-2xl mx-auto font-light">
+            We're always looking for elite engineers and marketeers who want to scale beyond human limits.
+          </p>
+          <a 
+            href="/careers" 
+            className="inline-flex h-16 px-12 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.2em] text-sm items-center justify-center gap-3 hover:scale-105 transition-transform shadow-[0_0_40px_rgba(124,58,237,0.15)] group"
+          >
+            Explore Careers <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+          </a>
+        </motion.div>
 
       </div>
 

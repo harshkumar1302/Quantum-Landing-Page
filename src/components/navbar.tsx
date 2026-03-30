@@ -53,10 +53,10 @@ export function Navbar() {
             onMouseEnter={() => setProductsHovered(true)}
             onMouseLeave={() => setProductsHovered(false)}
           >
-            <button className="flex items-center space-x-1 hover:text-primary transition-colors py-2">
+            <Link href="/products" className="flex items-center space-x-1 hover:text-primary transition-colors py-2">
               <span>Products</span>
               <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${productsHovered ? "rotate-180" : ""}`} />
-            </button>
+            </Link>
             
             <AnimatePresence>
               {productsHovered && (
@@ -68,7 +68,7 @@ export function Navbar() {
                   className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[420px] p-3 bg-white/90 dark:bg-black/90 backdrop-blur-3xl border border-black/10 dark:border-white/10 rounded-3xl shadow-2xl flex flex-col gap-2"
                 >
                    <Link 
-                     href="/#creonnect"
+                     href="/products/creonnect"
                      className="group flex gap-5 p-4 hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl transition-all duration-300 relative overflow-hidden"
                      onClick={() => setProductsHovered(false)}
                    >
@@ -159,7 +159,7 @@ export function Navbar() {
             <div>
               <span className="text-sm font-medium text-black/40 dark:text-white/40 uppercase tracking-widest mb-4 block">Products</span>
               <Link
-                href="/#creonnect"
+                href="/products/creonnect"
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-3 hover:text-primary transition-colors"
               >

@@ -35,8 +35,8 @@ export function TorchCursor() {
   const x4 = useSpring(p4tx, { stiffness: 130, damping: 22 }); const y4 = useSpring(p4ty, { stiffness: 130, damping: 22 });
 
   // Hook Order Guarantee: Define templates before any conditional logic
-  const centerAlpha = isHovering ? "3A" : "18";
-  const midAlpha = isHovering ? "1A" : "08";
+  const centerAlpha = isHovering ? "3A" : "00";
+  const midAlpha = isHovering ? "1A" : "00";
   const additiveGlow = useMotionTemplate`radial-gradient(circle at ${xCore}px ${yCore}px, ${hoverColor}${centerAlpha} 0%, ${hoverColor}${midAlpha} 30%, transparent 70%)`;
 
   useEffect(() => {
@@ -143,10 +143,10 @@ export function TorchCursor() {
                     width: isHovering ? 6 : 4,
                     height: isHovering ? 6 : 4,
                     // Use explicit rgba to ensure smooth animation frames
-                    backgroundColor: isHovering ? `${hoverColor}ff` : "rgba(0,0,0,0.1)",
-                    border: isHovering ? `1.5px solid ${hoverColor}ff` : "1px solid rgba(0,0,0,0.1)",
-                    opacity: isHovering ? 1 : 0.6,
-                    scale: 1
+                    backgroundColor: isHovering ? `${hoverColor}ff` : "rgba(0,0,0,0)",
+                    border: isHovering ? `1.5px solid ${hoverColor}ff` : "1px solid rgba(0,0,0,0)",
+                    opacity: isHovering ? 1 : 0,
+                    scale: isHovering ? 1 : 0
                  }}
                  transition={{ duration: 0.2 }}
                  className="rounded-full -translate-x-1/2 -translate-y-1/2"
@@ -157,6 +157,7 @@ export function TorchCursor() {
       ) : (
         // --- THE FLASHLIGHT (Dark Mode / Black Sections) ---
         <motion.div
+          animate={{ opacity: isHovering ? 1 : 0 }}
           style={{ background: additiveGlow }}
           className="absolute inset-0 w-full h-full mix-blend-plus-lighter dark:mix-blend-screen"
         />
