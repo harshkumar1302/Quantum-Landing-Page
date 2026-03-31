@@ -13,26 +13,6 @@ const products = [
     image: "/images/products/creonnect-logo.webp",
     live: true,
     href: "/products/creonnect"
-  },
-  {
-    id: "engine",
-    name: "Quantum Engine",
-    tagline: "The Prediction Layer",
-    description: "High-throughput API infrastructure for predictive conversational modeling and neural gating.",
-    image: null,
-    icon: <Cpu className="w-12 h-12" />,
-    live: false,
-    href: "#"
-  },
-  {
-    id: "sandbox",
-    name: "Sandbox",
-    tagline: "The Testing Environment",
-    description: "A secure, siloed environment for stress-testing your digital twins before deployment.",
-    image: null,
-    icon: <Box className="w-12 h-12" />,
-    live: false,
-    href: "#"
   }
 ];
 
@@ -64,8 +44,8 @@ export default function ProductsPage() {
            </p>
         </div>
 
-        {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Product Grid - Centered for single product */}
+        <div className="flex justify-center max-w-2xl mx-auto">
           {products.map((product, i) => (
             <motion.div
               key={product.id}
@@ -80,7 +60,7 @@ export default function ProductsPage() {
                  {product.image ? (
                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                  ) : (
-                   <div className="text-[#7C3AED]">{product.icon || <Sparkles />}</div>
+                   <div className="text-[#7C3AED]"><Sparkles /></div>
                  )}
               </div>
 

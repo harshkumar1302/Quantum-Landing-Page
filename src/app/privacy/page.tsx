@@ -55,9 +55,6 @@ export default function PrivacyPage() {
         
         {/* Header */}
         <div className="mb-20">
-          <Link href="/" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em] opacity-40 hover:opacity-100 hover:text-[#7C3AED] transition-all mb-12 group">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Home
-          </Link>
           
           <motion.div 
             initial={{ opacity: 0, y: 30 }}

@@ -14,6 +14,9 @@ export function TorchCursor() {
   const [isInvertedSection, setIsInvertedSection] = useState(false);
   const [hoverRect, setHoverRect] = useState<{ x: number, y: number, w: number, h: number } | null>(null);
 
+  // Tracking Current Element
+  const currentElement = useRef<HTMLElement | null>(null);
+
   // Core tracking
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
@@ -47,13 +50,47 @@ export function TorchCursor() {
   useEffect(() => {
     if (typeof window === "undefined" || window.matchMedia("(max-width: 1024px)").matches) return;
 
+    const updateSwarmTargets = (rect: DOMRect) => {
+      // THRESHOLD: Buttons and small links get a center "Swell". 
+      // Large cards and sections get a corner "Snap".
+      const isCard = rect.width > 280 || rect.height > 120;
+      
+      if (!isCard) {
+         // SWELL: All particles target the center for a dense, focused look on small hits
+         const centerX = rect.left + rect.width / 2;
+         const centerY = rect.top + rect.height / 2;
+         p1tx.set(centerX); p1ty.set(centerY);
+         p2tx.set(centerX); p2ty.set(centerY);
+         p3tx.set(centerX); p3ty.set(centerY);
+         p4tx.set(centerX); p4ty.set(centerY);
+      } else {
+         // SNAP: Particles fly to the 4 corners for high-end structure on cards
+         const padding = 2; // Slight inward offset for better visual alignment
+         p1tx.set(rect.left + padding);   p1ty.set(rect.top + padding);
+         p2tx.set(rect.right - padding);  p2ty.set(rect.top + padding);
+         p3tx.set(rect.right - padding);  p3ty.set(rect.bottom - padding);
+         p4tx.set(rect.left + padding);   p4ty.set(rect.bottom - padding);
+      }
+    };
+
     const manageMouseMove = (e: MouseEvent) => {
       const { clientX: cx, clientY: cy } = e;
       mouseX.set(cx);
       mouseY.set(cy);
 
-      if (!isHovering) {
-        // SWARM CLUSTER: Particles have slight noise/offsets to create a 3D cluster feel
+      if (isHovering && currentElement.current) {
+        const rect = currentElement.current.getBoundingClientRect();
+        
+        // SAFETY EXIT: If mouse somehow drifts out without triggering mouseover/out
+        const buffer = 10;
+        if (cx < rect.left - buffer || cx > rect.right + buffer || cy < rect.top - buffer || cy > rect.bottom + buffer) {
+           setIsHovering(false);
+           currentElement.current = null;
+        } else {
+           updateSwarmTargets(rect);
+        }
+      } else if (!isHovering) {
+        // SWARM CLUSTER: Natural orbiting noise
         p1tx.set(cx - 10); p1ty.set(cy - 8);
         p2tx.set(cx + 12); p2ty.set(cy - 5);
         p3tx.set(cx + 8);  p3ty.set(cy + 10);
@@ -62,55 +99,45 @@ export function TorchCursor() {
     };
 
     const manageMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target?.closest) return;
-      
-      // Look for ANY interactive element
-      const interactiveTarget = target.closest('a, button, [role="button"], [data-torch-color]') as HTMLElement;
+      // Find the nearest interactive element even if target is a text node / icon
+      const target = e.target as Node;
+      const el = target instanceof Element ? target : target.parentElement;
+      if (!el) return;
+
+      const interactiveTarget = el.closest('a, button, [role="button"], [data-torch-color]') as HTMLElement;
       
       if (interactiveTarget) {
         setIsHovering(true);
+        currentElement.current = interactiveTarget;
         const rect = interactiveTarget.getBoundingClientRect();
-        const color = interactiveTarget.getAttribute("data-torch-color") || "#7C3AED"; // Default to brand purple
+        const color = interactiveTarget.getAttribute("data-torch-color") || "#7C3AED"; 
         
         setHoverColor(color);
-        setHoverRect({ x: rect.left, y: rect.top, w: rect.width, h: rect.height });
-
-        // SIZE-AWARE REACTION: 
-        // Large cards/sections get the Corner Snap. 
-        // Small links/buttons get a high-density Centered Swell.
-        const isSmallElement = rect.width < 120;
-        
-        if (isSmallElement) {
-           // SWELL: All particles target the center with slight variety
-           const centerX = rect.left + rect.width / 2;
-           const centerY = rect.top + rect.height / 2;
-           p1tx.set(centerX); p1ty.set(centerY);
-           p2tx.set(centerX); p2ty.set(centerY);
-           p3tx.set(centerX); p3ty.set(centerY);
-           p4tx.set(centerX); p4ty.set(centerY);
-        } else {
-           // SNAP: Particles fly to the 4 boundary corners
-           p1tx.set(rect.left);       p1ty.set(rect.top);
-           p2tx.set(rect.right);      p2ty.set(rect.top);
-           p3tx.set(rect.right);      p3ty.set(rect.bottom);
-           p4tx.set(rect.left);       p4ty.set(rect.bottom);
-        }
+        updateSwarmTargets(rect);
       } else {
         setIsHovering(false);
-        setHoverRect(null);
+        currentElement.current = null;
       }
 
       // Detect background theme flip
-      const invertedTarget = target.closest('[data-theme-section="inverted"]');
+      const invertedTarget = el.closest('[data-theme-section="inverted"]');
       setIsInvertedSection(!!invertedTarget);
+    };
+
+    const handleScroll = () => {
+      if (isHovering && currentElement.current) {
+        const rect = currentElement.current.getBoundingClientRect();
+        updateSwarmTargets(rect);
+      }
     };
 
     window.addEventListener("mousemove", manageMouseMove);
     document.addEventListener("mouseover", manageMouseOver);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("mousemove", manageMouseMove);
       document.removeEventListener("mouseover", manageMouseOver);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [isHovering, mouseX, mouseY, theme]);
 

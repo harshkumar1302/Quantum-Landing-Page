@@ -8,6 +8,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { Loader } from "@/components/loader";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { TorchCursor } from "@/components/torch-cursor";
+import { BackToHome } from "@/components/back-to-home";
 
 
 
@@ -98,6 +99,7 @@ export default function RootLayout({
           <TorchCursor />
           <div className="noise-overlay" />
           <Loader />
+          <BackToHome />
           <Navbar />
           <SmoothScroll>
             <main className="w-full flex-1 relative flex flex-col items-center">
