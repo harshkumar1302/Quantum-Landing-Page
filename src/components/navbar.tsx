@@ -41,7 +41,7 @@ export function Navbar() {
         isOpen
           ? "bg-transparent border-transparent py-4"
           : scrolled 
-            ? "bg-white/80 dark:bg-black/80 backdrop-blur-xl border-black/5 dark:border-white/5 shadow-sm py-4" 
+            ? "bg-white dark:bg-black border-black/10 dark:border-white/10 shadow-sm py-4" 
             : "bg-transparent border-transparent py-6"
       }`}
     >
@@ -81,7 +81,7 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[420px] p-2 bg-white/80 dark:bg-black/80 backdrop-blur-3xl border border-black/10 dark:border-white/10 rounded-[2rem] shadow-2xl flex flex-col gap-1 overflow-hidden"
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[420px] p-2 bg-white dark:bg-black border border-black/10 dark:border-white/10 rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(255,255,255,0.05)] flex flex-col gap-1 overflow-hidden z-[100]"
                 >
                    <Link 
                      href="/products/creonnect"

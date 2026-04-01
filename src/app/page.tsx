@@ -93,7 +93,7 @@ const FAQItem = ({ faq, index }: { faq: typeof faqs[0], index: number }) => {
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
       className="border-b border-black/10 dark:border-white/10"
     >
-      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between text-left group py-8 text-black dark:text-white cursor-none">
+      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between text-left group py-8 text-black dark:text-white dark:cursor-none">
         <h3 className="text-xl sm:text-2xl font-bold pr-6 opacity-90 group-hover:opacity-100 transition-opacity">{faq.q}</h3>
         <span className={`w-12 h-12 shrink-0 rounded-full flex items-center justify-center transition-colors duration-300 ${isOpen ? 'bg-[#7C3AED] text-white' : 'bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10'}`}>
           {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
@@ -165,10 +165,10 @@ export default function Home() {
 
             {/* Hyper-Optimized CTA Flow */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-2">
-               <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-300 group cursor-none">
+               <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-300 group dark:cursor-none">
                   Explore Creonnect <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                </a>
-               <a href="#problem" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white font-bold uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300 cursor-none">
+               <a href="#problem" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/20 text-black dark:text-white font-bold uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:bg-black/10 dark:hover:bg-white/20 transition-all duration-300 dark:cursor-none backdrop-blur-sm">
                   Market Thesis
                </a>
             </motion.div>
@@ -189,19 +189,19 @@ export default function Home() {
                   </p>
                </div>
                <div className="grid grid-cols-2 gap-4">
-                  <div data-torch-color="#3B82F6" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#3B82F6]/30 transition-all cursor-none">
+                  <div data-torch-color="#3B82F6" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#3B82F6]/30 transition-all dark:cursor-none">
                      <div className="text-4xl font-black mb-2">$250B</div>
                      <div className="text-[10px] uppercase tracking-widest opacity-50">Market Size</div>
                   </div>
-                  <div data-torch-color="#7C3AED" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#7C3AED]/30 transition-all cursor-none">
+                  <div data-torch-color="#7C3AED" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#7C3AED]/30 transition-all dark:cursor-none">
                      <div className="text-4xl font-black mb-2">3-Sided</div>
                      <div className="text-[10px] uppercase tracking-widest opacity-50">Platform Ecosystem</div>
                   </div>
-                  <div data-torch-color="#10B981" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#10B981]/30 transition-all cursor-none">
+                  <div data-torch-color="#10B981" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#10B981]/30 transition-all dark:cursor-none">
                      <div className="text-4xl font-black mb-2">100%</div>
                      <div className="text-[10px] uppercase tracking-widest opacity-50">API Compliance</div>
                   </div>
-                  <div data-torch-color="#EC4899" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#EC4899]/30 transition-all cursor-none">
+                  <div data-torch-color="#EC4899" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#EC4899]/30 transition-all dark:cursor-none">
                      <div className="text-4xl font-black mb-2">AI-First</div>
                      <div className="text-[10px] uppercase tracking-widest opacity-50">Core Architecture</div>
                   </div>
@@ -228,7 +228,7 @@ export default function Home() {
                   <motion.div 
                      key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
                      data-torch-color="#EF4444"
-                     className="p-8 rounded-3xl border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:bg-red-500/5 hover:border-red-500/20 transition-all group cursor-none"
+                     className="p-8 rounded-3xl border border-black/5 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] hover:bg-red-500/5 hover:border-red-500/20 transition-all group dark:cursor-none"
                   >
                      <div className="text-xs font-mono mb-4 opacity-30 group-hover:opacity-100 group-hover:text-red-500 transition-all">GAP_0{i+1}</div>
                      <h3 className="text-xl font-bold mb-3 tracking-tight">{gap.title}</h3>
@@ -257,7 +257,7 @@ export default function Home() {
                      <motion.div 
                         key={i} initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                         data-torch-color="#7C3AED"
-                        className="flex gap-8 p-8 rounded-[2.5rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 cursor-none group relative overflow-hidden"
+                        className="flex gap-8 p-8 rounded-[2.5rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 dark:cursor-none group relative overflow-hidden"
                      >
                         <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                         <div className="text-4xl font-black opacity-20 shrink-0 group-hover:opacity-100 group-hover:text-[#7C3AED] transition-all relative z-10">0{i+1}</div>
@@ -295,7 +295,7 @@ export default function Home() {
                   <motion.div 
                      key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ delay: i * 0.1, duration: 0.5 }}
                      data-torch-color={feat.color}
-                     className="p-8 sm:p-12 rounded-[2rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 group relative overflow-hidden cursor-none"
+                     className="p-8 sm:p-12 rounded-[2rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 group relative overflow-hidden dark:cursor-none"
                   >
                      {/* Hover Glow */}
                      <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -344,7 +344,7 @@ export default function Home() {
                   <motion.div 
                      key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                      data-torch-color={audience.color}
-                     className="p-10 rounded-[3rem] bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-xl group hover:-translate-y-2 transition-all duration-500 cursor-none"
+                     className="p-10 rounded-[3rem] bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-xl group hover:-translate-y-2 transition-all duration-500 dark:cursor-none"
                   >
                      <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#7C3AED] mb-4 group-hover:text-primary transition-colors">{audience.focus}</div>
                      <h3 className="text-3xl font-bold mb-6 tracking-tight">{audience.title}</h3>
@@ -437,7 +437,7 @@ export default function Home() {
             <h2 className="text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter mb-12 sm:mb-16 leading-[0.85]">
                Build <span className="opacity-80 italic">The</span><br/> Future.
             </h2>
-            <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="inline-flex w-full sm:w-auto min-h-[72px] px-12 sm:px-16 rounded-full bg-white dark:bg-black text-black dark:text-white font-black uppercase tracking-[0.2em] text-sm sm:text-base items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(255,255,255,0.15)] dark:shadow-[0_0_60px_rgba(0,0,0,0.15)] group cursor-none">
+            <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="inline-flex w-full sm:w-auto min-h-[72px] px-12 sm:px-16 rounded-full bg-white dark:bg-black text-black dark:text-white font-black uppercase tracking-[0.2em] text-sm sm:text-base items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(255,255,255,0.15)] dark:shadow-[0_0_60px_rgba(0,0,0,0.15)] group dark:cursor-none">
                Initialize Creonnect <ArrowRight className="w-6 h-6 animate-pulse group-hover:translate-x-2 transition-transform" />
             </a>
          </div>

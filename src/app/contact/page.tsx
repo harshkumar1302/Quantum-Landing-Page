@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-background transition-colors duration-500">
-      <div className="pt-32 pb-16 px-4 md:px-8 container mx-auto text-center text-foreground">
+    <main className="min-h-screen bg-background transition-colors duration-500 dark:cursor-none" data-torch-color="#7C3AED">
+      <div className="pt-52 pb-16 px-4 md:px-8 container mx-auto text-center text-foreground">
          <motion.div
            initial={{ opacity: 0, y: 20 }}
            animate={{ opacity: 1, y: 0 }}

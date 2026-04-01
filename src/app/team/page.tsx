@@ -87,7 +87,7 @@ function KineticTeamCard({ member, index }: { member: any; index: number }) {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 + index * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="relative group w-full lg:w-[260px] cursor-none"
+      className="relative group w-full lg:w-[260px] dark:cursor-none"
       data-torch-color="#7C3AED"
     >
       {/* 3D Depth Card Structure */}

@@ -22,7 +22,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen pt-24 bg-background text-foreground transition-colors duration-500">
+    <div className="flex flex-col min-h-screen pt-52 bg-background text-foreground transition-colors duration-500 dark:cursor-none" data-torch-color="#7C3AED">
       {/* Hero */}
       <section className="py-20 md:py-32 relative overflow-hidden">
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,var(--color-primary)_0%,transparent_50%)] opacity-10 mix-blend-screen" />

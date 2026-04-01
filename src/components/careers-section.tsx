@@ -6,12 +6,11 @@ import { ArrowRight } from "lucide-react";
 
 export function CareersSection() {
   const roles = [
-    { title: "UI Engineer Intern", dept: "Engineering" },
-    { title: "Social Media Creator", dept: "Marketing" }
+    { title: "Content Creator", dept: "Creative Collective" }
   ];
 
   return (
-    <section className="py-24 bg-[#0A0A1F] text-white">
+    <section className="py-24 bg-[#0A0A1F] text-white dark:cursor-none" data-torch-color="#7C3AED">
       <div className="container mx-auto px-4 md:px-8">
         <div className="max-w-4xl mx-auto rounded-3xl bg-gradient-to-br from-primary/20 via-primary/5 to-transparent border border-white/10 p-10 md:p-16 flex flex-col md:flex-row items-center gap-12 relative overflow-hidden">
           
@@ -34,7 +33,7 @@ export function CareersSection() {
               transition={{ delay: 0.1 }}
               className="text-lg text-white/70 max-w-lg mb-8 mx-auto md:mx-0 font-light leading-relaxed"
             >
-              We are a team of relentless builders operating on weekly shipping cycles. If you thrive in high-velocity environments and want to shape the intelligent infrastructure for millions of creators — join the realm.
+              We are looking for a visionary Content Creator to join our Creative Collective. If you can translate complex AI infrastructure into compelling narratives and thrive in high-velocity shipping cycles — join the realm.
             </motion.p>
             
             <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-8">

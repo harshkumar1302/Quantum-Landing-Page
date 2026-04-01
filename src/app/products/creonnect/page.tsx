@@ -74,7 +74,7 @@ export default function CreonnectPage() {
       <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
         
         {/* HERO SECTION */}
-        <section className="flex flex-col items-center text-center mb-40">
+        <section className="flex flex-col items-center text-center mb-40 dark:cursor-none" data-torch-color="#7C3AED">
           <SectionBadge text="Product Deep Dive" />
           <motion.h1 
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -92,14 +92,14 @@ export default function CreonnectPage() {
           </motion.p>
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
-             <Link href="#waitlist" className="h-20 px-12 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.2em] text-sm flex items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(124,58,237,0.2)] group">
+             <Link href="#waitlist" className="h-20 px-12 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.2em] text-sm flex items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(124,58,237,0.2)] group dark:cursor-none">
                 Secure Sandbox <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
              </Link>
           </motion.div>
         </section>
 
         {/* THE CORE PROBLEM */}
-        <section className="mb-40 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <section className="mb-40 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center dark:cursor-none" data-torch-color="#EF4444">
           <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <SectionBadge text="The Bottleneck" color="#EF4444" />
             <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Human response scales linearly. <br /><span className="opacity-40 italic">Opportunities do not.</span></h2>
@@ -133,7 +133,7 @@ export default function CreonnectPage() {
         </section>
 
         {/* FEATURES GRID */}
-        <section className="mb-40">
+        <section className="mb-40 dark:cursor-none" data-torch-color="#7C3AED">
           <div className="flex flex-col items-center text-center mb-24">
             <SectionBadge text="Neural Architecture" />
             <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">Engine Specs</h2>
@@ -147,7 +147,8 @@ export default function CreonnectPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-12 rounded-[3.5rem] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-700 group cursor-none"
+                data-torch-color={feat.color}
+                className="p-12 rounded-[3.5rem] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-700 group dark:cursor-none"
               >
                 <div className="w-16 h-16 rounded-[1.5rem] bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500" style={{ color: feat.color }}>
                   {feat.icon}
@@ -157,10 +158,10 @@ export default function CreonnectPage() {
               </motion.div>
             ))}
           </div>
-SectionBadge        </section>
+        </section>
 
         {/* TECHNICAL STACK */}
-        <section className="mb-40 py-32 rounded-[4rem] bg-black dark:bg-white text-white dark:text-black overflow-hidden relative">
+        <section className="mb-40 py-32 rounded-[4rem] bg-black dark:bg-white text-white dark:text-black overflow-hidden relative dark:cursor-none" data-torch-color="#3B82F6" data-theme-section="inverted">
           <div className="absolute inset-0 opacity-20 mix-blend-overlay">
             <div className="w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
           </div>
@@ -181,7 +182,7 @@ SectionBadge        </section>
         </section>
 
         {/* FINAL CTA */}
-        <section id="waitlist" className="pb-40 text-center">
+        <section id="waitlist" className="pb-40 text-center dark:cursor-none" data-torch-color="#7C3AED">
           <div className="inline-flex items-center gap-4 mb-12">
              <div className="h-[1px] w-12 bg-[#7C3AED]/30" />
              <span className="text-sm font-black uppercase tracking-[0.5em] text-[#7C3AED]">Sequence Initialize</span>
@@ -191,7 +192,7 @@ SectionBadge        </section>
             Enter the <br />
             <span className="italic font-light opacity-20">Quantum</span> Realm.
           </h2>
-          <button className="h-24 px-16 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.2em] text-lg hover:scale-105 active:scale-95 transition-all shadow-[0_0_80px_rgba(124,58,237,0.3)] group">
+          <button className="h-24 px-16 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.2em] text-lg hover:scale-105 active:scale-95 transition-all shadow-[0_0_80px_rgba(124,58,237,0.3)] group dark:cursor-none">
             Apply for Waitlist <ArrowRight className="w-6 h-6 ml-4 inline-block group-hover:translate-x-2 transition-transform" />
           </button>
           <p className="mt-12 text-sm font-mono opacity-40 uppercase tracking-widest">Next testing batch: 48 Hours Remaining</p>

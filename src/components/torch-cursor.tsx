@@ -10,7 +10,7 @@ export function TorchCursor() {
   // ALL States and Hooks at the ABSOLUTE TOP level
   const [mounted, setMounted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [hoverColor, setHoverColor] = useState("#000000"); // Standard black for light mode
+  const [hoverColor, setHoverColor] = useState("#7C3AED"); 
   const [isInvertedSection, setIsInvertedSection] = useState(false);
   const [hoverRect, setHoverRect] = useState<{ x: number, y: number, w: number, h: number } | null>(null);
 
@@ -124,6 +124,14 @@ export function TorchCursor() {
       // Detect background theme flip
       const invertedTarget = el.closest('[data-theme-section="inverted"]');
       setIsInvertedSection(!!invertedTarget);
+
+      // Check if current page/section wants to disable torch in light mode
+      const pageWrapper = document.querySelector('main, div.flex.flex-col.min-h-screen');
+      const isDisabledInLight = pageWrapper?.hasAttribute('data-torch-light-disabled');
+      if (isDisabledInLight && ((theme === 'light' && !invertedTarget) || (theme === 'dark' && invertedTarget))) {
+        setHoverColor('transparent');
+        setIsHovering(false);
+      }
     };
 
     const handleScroll = () => {
@@ -147,45 +155,28 @@ export function TorchCursor() {
   if (!mounted) return null;
 
   const isPhysicallyLight = (theme === "light" && !isInvertedSection) || (theme === "dark" && isInvertedSection);
+  const pageWrapper = typeof document !== 'undefined' ? document.querySelector('main, div.flex.flex-col.min-h-screen') : null;
+  const isTorchDisabledOnPage = pageWrapper?.hasAttribute('data-torch-light-disabled') && isPhysicallyLight;
+
+  if (isTorchDisabledOnPage) return null;
 
   return (
-    <div className="fixed inset-0 w-full h-full pointer-events-none hidden lg:block z-[9999] overflow-hidden">
-      {/* --- THE UNIVERSAL QUANTUM CORE (Always Visible) --- */}
+    <div className={`fixed inset-0 w-full h-full pointer-events-none hidden lg:block z-[9999] overflow-hidden ${isPhysicallyLight ? '' : 'cursor-none'}`}>
+      {/* --- THE UNIVERSAL QUANTUM CORE (Always Visible Bullet) --- */}
       <motion.div style={{ x: xCore, y: yCore }} className="absolute top-0 left-0">
          <motion.div 
-           animate={{ scale: isHovering ? 0 : 1 }}
-           className={`w-2.5 h-2.5 rounded-full -translate-x-1/2 -translate-y-1/2 ${isPhysicallyLight ? 'bg-black' : 'bg-white'}`} 
+           animate={{ 
+             scale: isHovering && !isPhysicallyLight ? 1.2 : 1,
+             width: isPhysicallyLight ? 6 : 10,
+             height: isPhysicallyLight ? 6 : 10,
+             backgroundColor: isPhysicallyLight ? 'rgba(0,0,0,0.8)' : 'rgba(255,255,255,1)'
+           }}
+           className="rounded-full -translate-x-1/2 -translate-y-1/2" 
          />
       </motion.div>
 
-      {isPhysicallyLight ? (
-        // --- THE QUANTUM SWARM (Light Mode / White Sections) ---
-        <>
-
-          {/* Atomic Particle Swarm (Velocity Trailing) */}
-          {[
-            { x: x1, y: y1 }, { x: x2, y: y2 }, 
-            { x: x3, y: y3 }, { x: x4, y: y4 }
-          ].map((p, i) => (
-            <motion.div key={i} style={{ x: p.x, y: p.y }} className="absolute top-0 left-0">
-               <motion.div
-                 animate={{
-                    width: isHovering ? 6 : 4,
-                    height: isHovering ? 6 : 4,
-                    // Use explicit rgba to ensure smooth animation frames
-                    backgroundColor: isHovering ? `${hoverColor}ff` : "rgba(0,0,0,0)",
-                    border: isHovering ? `1.5px solid ${hoverColor}ff` : "1px solid rgba(0,0,0,0)",
-                    opacity: isHovering ? 1 : 0,
-                    scale: isHovering ? 1 : 0
-                 }}
-                 transition={{ duration: 0.2 }}
-                 className="rounded-full -translate-x-1/2 -translate-y-1/2"
-               />
-            </motion.div>
-          ))}
-        </>
-      ) : (
-        // --- THE FLASHLIGHT (Dark Mode / Black Sections) ---
+      {!isPhysicallyLight && (
+        // --- THE FLASHLIGHT (Dark Mode / Black Sections Only) ---
         <motion.div
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
