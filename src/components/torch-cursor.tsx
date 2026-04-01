@@ -21,9 +21,9 @@ export function TorchCursor() {
   const mouseX = useMotionValue(-1000);
   const mouseY = useMotionValue(-1000);
 
-  // Core Pulse Springs
-  const xCore = useSpring(mouseX, { stiffness: 600, damping: 50 });
-  const yCore = useSpring(mouseY, { stiffness: 600, damping: 50 });
+  // Core Pulse Springs (Liquid core - reduced stiffness, increased damping for "transcendental" drag)
+  const xCore = useSpring(mouseX, { stiffness: 450, damping: 60 });
+  const yCore = useSpring(mouseY, { stiffness: 450, damping: 60 });
 
   // P1-P4 Independent Movement Engines (Motion Values)
   const p1tx = useMotionValue(-1000); const p1ty = useMotionValue(-1000);
@@ -31,15 +31,17 @@ export function TorchCursor() {
   const p3tx = useMotionValue(-1000); const p3ty = useMotionValue(-1000);
   const p4tx = useMotionValue(-1000); const p4ty = useMotionValue(-1000);
 
-  // P1-P4 Springs (Individually tuned for fluid swarming)
-  const x1 = useSpring(p1tx, { stiffness: 150, damping: 25 }); const y1 = useSpring(p1ty, { stiffness: 150, damping: 25 });
-  const x2 = useSpring(p2tx, { stiffness: 120, damping: 20 }); const y2 = useSpring(p2ty, { stiffness: 120, damping: 20 });
-  const x3 = useSpring(p3tx, { stiffness: 170, damping: 30 }); const y3 = useSpring(p3ty, { stiffness: 170, damping: 30 });
-  const x4 = useSpring(p4tx, { stiffness: 130, damping: 22 }); const y4 = useSpring(p4ty, { stiffness: 130, damping: 22 });
+  // P1-P4 Springs (Liquid Swarm - low frequency for organic drift)
+  const x1 = useSpring(p1tx, { stiffness: 100, damping: 30 }); const y1 = useSpring(p1ty, { stiffness: 100, damping: 30 });
+  const x2 = useSpring(p2tx, { stiffness: 80, damping: 25 });  const y2 = useSpring(p2ty, { stiffness: 80, damping: 25 });
+  const x3 = useSpring(p3tx, { stiffness: 120, damping: 35 }); const y3 = useSpring(p3ty, { stiffness: 120, damping: 35 });
+  const x4 = useSpring(p4tx, { stiffness: 90, damping: 28 });  const y4 = useSpring(p4ty, { stiffness: 90, damping: 28 });
 
   // Hook Order Guarantee: Define templates before any conditional logic
-  const centerAlpha = isHovering ? "3A" : "00";
-  const midAlpha = isHovering ? "1A" : "00";
+  // Alpha values for the flashlight (Dark Mode / Black sections)
+  // "3A" / "1B" for intense hit, "15" / "0A" for baseline "dim" as requested for continuity
+  const centerAlpha = isHovering ? "40" : "18"; 
+  const midAlpha = isHovering ? "20" : "0C";
   const additiveGlow = useMotionTemplate`radial-gradient(circle at ${xCore}px ${yCore}px, ${hoverColor}${centerAlpha} 0%, ${hoverColor}${midAlpha} 30%, transparent 70%)`;
 
   useEffect(() => {
@@ -148,16 +150,17 @@ export function TorchCursor() {
 
   return (
     <div className="fixed inset-0 w-full h-full pointer-events-none hidden lg:block z-[9999] overflow-hidden">
+      {/* --- THE UNIVERSAL QUANTUM CORE (Always Visible) --- */}
+      <motion.div style={{ x: xCore, y: yCore }} className="absolute top-0 left-0">
+         <motion.div 
+           animate={{ scale: isHovering ? 0 : 1 }}
+           className={`w-2.5 h-2.5 rounded-full -translate-x-1/2 -translate-y-1/2 ${isPhysicallyLight ? 'bg-black' : 'bg-white'}`} 
+         />
+      </motion.div>
+
       {isPhysicallyLight ? (
         // --- THE QUANTUM SWARM (Light Mode / White Sections) ---
         <>
-          {/* Central Quantum Core (Only visible when not hovering) */}
-          <motion.div style={{ x: xCore, y: yCore }} className="absolute top-0 left-0">
-             <motion.div 
-               animate={{ scale: isHovering ? 0 : 1 }}
-               className="w-2 h-2 rounded-full -translate-x-1/2 -translate-y-1/2 bg-black dark:bg-white" 
-             />
-          </motion.div>
 
           {/* Atomic Particle Swarm (Velocity Trailing) */}
           {[
@@ -184,7 +187,8 @@ export function TorchCursor() {
       ) : (
         // --- THE FLASHLIGHT (Dark Mode / Black Sections) ---
         <motion.div
-          animate={{ opacity: isHovering ? 1 : 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           style={{ background: additiveGlow }}
           className="absolute inset-0 w-full h-full mix-blend-plus-lighter dark:mix-blend-screen"
         />

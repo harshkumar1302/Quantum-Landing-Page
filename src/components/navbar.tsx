@@ -14,8 +14,16 @@ export function Navbar() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   
-  // Hover state for Products dropdown
+  // Hover states
   const [productsHovered, setProductsHovered] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState<number | null>(null);
+
+  const navLinks = [
+    { name: "About", href: "/about" },
+    { name: "Careers", href: "/careers" },
+    { name: "Lab", href: "/lab" },
+    { name: "Contact", href: "/contact" }
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -29,52 +37,60 @@ export function Navbar() {
   return (
     <>
     <header 
-      className={`fixed top-0 inset-x-0 ${isOpen ? "z-[70]" : "z-50"} w-full transition-all duration-300 border-b ${
+      className={`fixed top-0 inset-x-0 ${isOpen ? "z-[70]" : "z-50"} w-full transition-all duration-500 border-b ${
         isOpen
           ? "bg-transparent border-transparent py-4"
           : scrolled 
-            ? "bg-white/95 dark:bg-black/95 backdrop-blur-md border-black/10 dark:border-white/10 shadow-sm py-2" 
-            : "bg-transparent border-transparent py-4"
+            ? "bg-white/80 dark:bg-black/80 backdrop-blur-xl border-black/5 dark:border-white/5 shadow-sm py-4" 
+            : "bg-transparent border-transparent py-6"
       }`}
     >
       <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
         
         {/* Logo */}
         <Link href="/" className="flex items-center z-50 group hover:opacity-80 transition-opacity">
-          <Logo className={`transition-transform duration-300 ${scrolled ? "scale-90 origin-left" : "scale-100 origin-left"}`} />
+          <Logo className={`transition-transform duration-500 ${scrolled ? "scale-90 origin-left" : "scale-100 origin-left"}`} />
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden lg:flex flex-1 justify-center items-center space-x-6 text-sm font-medium text-black/80 dark:text-white/80">
+        <nav className="hidden lg:flex flex-1 justify-center items-center space-x-1 text-sm font-medium text-black/60 dark:text-white/60">
           
           {/* Products Dropdown */}
           <div 
-            className="relative"
-            onMouseEnter={() => setProductsHovered(true)}
-            onMouseLeave={() => setProductsHovered(false)}
+            className="relative px-4 py-2 rounded-full transition-colors hover:text-black dark:hover:text-white"
+            onMouseEnter={() => { setProductsHovered(true); setHoveredNav(-1); }}
+            onMouseLeave={() => { setProductsHovered(false); setHoveredNav(null); }}
           >
-            <Link href="/products" className="flex items-center space-x-1 hover:text-primary transition-colors py-2">
+            <Link href="/products" className="flex items-center space-x-1 py-1 relative z-10 transition-colors">
               <span>Products</span>
-              <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${productsHovered ? "rotate-180" : ""}`} />
+              <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${productsHovered ? "rotate-180" : ""}`} />
             </Link>
             
+            {hoveredNav === -1 && (
+               <motion.div
+                 layoutId="nav-glow"
+                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                 className="absolute inset-0 bg-black/5 dark:bg-white/5 rounded-full z-0"
+               />
+            )}
+
             <AnimatePresence>
               {productsHovered && (
                 <motion.div
-                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[420px] p-3 bg-white/90 dark:bg-black/90 backdrop-blur-3xl border border-black/10 dark:border-white/10 rounded-3xl shadow-2xl flex flex-col gap-2"
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute top-full left-1/2 -translate-x-1/2 mt-4 w-[420px] p-2 bg-white/80 dark:bg-black/80 backdrop-blur-3xl border border-black/10 dark:border-white/10 rounded-[2rem] shadow-2xl flex flex-col gap-1 overflow-hidden"
                 >
                    <Link 
                      href="/products/creonnect"
-                     className="group flex gap-5 p-4 hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl transition-all duration-300 relative overflow-hidden"
+                     className="group flex gap-5 p-4 hover:bg-black/5 dark:hover:bg-white/5 rounded-2xl transition-all duration-500 relative overflow-hidden"
                      onClick={() => setProductsHovered(false)}
                    >
                       <div className="absolute inset-0 bg-gradient-to-tr from-[#7C3AED]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                       
-                      <div className="w-14 h-14 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300 border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900">
+                      <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 border border-black/10 dark:border-white/10 bg-white dark:bg-zinc-900">
                          <img src="/images/products/creonnect-logo.webp" alt="Creonnect Logo" className="w-full h-full object-cover" />
                       </div>
                       <div className="relative z-10">
@@ -86,8 +102,8 @@ export function Navbar() {
                       </div>
                    </Link>
                    
-                   <div className="flex gap-5 p-4 bg-black/5 dark:bg-white/5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 items-center">
-                      <div className="w-14 h-14 rounded-2xl bg-black/5 dark:bg-white/5 shrink-0 flex items-center justify-center">
+                   <div className="flex gap-5 p-4 bg-black/5 dark:bg-white/5 rounded-2xl border border-dashed border-black/10 dark:border-white/10 items-center opacity-60">
+                      <div className="w-14 h-14 rounded-xl bg-black/5 dark:bg-white/5 shrink-0 flex items-center justify-center">
                          <Layers className="w-6 h-6 text-black/30 dark:text-white/30" />
                       </div>
                       <div>
@@ -100,11 +116,24 @@ export function Navbar() {
             </AnimatePresence>
           </div>
 
-          <Link href="/about" className="hover:text-primary transition-colors py-2">About</Link>
-
-          <Link href="/careers" className="hover:text-primary transition-colors py-2">Careers</Link>
-          <Link href="/lab" className="hover:text-primary transition-colors py-2">Lab</Link>
-          <Link href="/contact" className="hover:text-primary transition-colors py-2">Contact</Link>
+          {navLinks.map((link, i) => (
+             <Link 
+               key={link.href} 
+               href={link.href} 
+               className="relative px-4 py-2 rounded-full transition-colors hover:text-black dark:hover:text-white"
+               onMouseEnter={() => setHoveredNav(i)}
+               onMouseLeave={() => setHoveredNav(null)}
+             >
+                <span className="relative z-10">{link.name}</span>
+                {hoveredNav === i && (
+                   <motion.div
+                     layoutId="nav-glow"
+                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                     className="absolute inset-0 bg-black/5 dark:bg-white/5 rounded-full z-0"
+                   />
+                )}
+             </Link>
+          ))}
         </nav>
 
         {/* Actions (Theme + CTA) */}

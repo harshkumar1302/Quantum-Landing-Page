@@ -23,18 +23,18 @@ export function CareersSection() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-bold tracking-tight mb-4"
+              className="text-3xl md:text-6xl font-black tracking-tighter mb-4 uppercase"
             >
-              Come Build the Future with Us
+              Builders, Not Dreamers.
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-lg text-white/70 max-w-lg mb-8 mx-auto md:mx-0"
+              className="text-lg text-white/70 max-w-lg mb-8 mx-auto md:mx-0 font-light leading-relaxed"
             >
-              We're looking for relentless builders who want to shape how millions of creators work, earn, and grow. If you write code that matters, design experiences that convert, or build AI that understands people — we want to talk.
+              We are a team of relentless builders operating on weekly shipping cycles. If you thrive in high-velocity environments and want to shape the intelligent infrastructure for millions of creators — join the realm.
             </motion.p>
             
             <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-8">

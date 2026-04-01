@@ -18,27 +18,45 @@ const features = [
   { 
     color: "#7C3AED",
     icon: <MessageSquare className="w-6 h-6 text-[#7C3AED]" />, 
-    title: "Neuro-Linguistic DMs", 
-    desc: "AI that understands context, tone, and intent with 99.9% accuracy. It mimics your exact syntax to close thousands of leads while you sleep." 
+    title: "AI DM Automation", 
+    desc: "100% Meta API compliant lead capture from comments & stories. Personalized sequences that mirror your exact syntax." 
   },
   { 
     color: "#3B82F6",
     icon: <TrendingUp className="w-6 h-6 text-[#3B82F6]" />, 
-    title: "Predictive Analytics", 
-    desc: "Stop guessing. Track historical engagement velocities to know exactly when and what to post for maximum algorithmic reach." 
+    title: "Deep Neural Analytics", 
+    desc: "Proprietary ERA scoring, hook-rate analysis, and save-ratio optimization. Move beyond vanity metrics to real performance." 
   },
   { 
     color: "#10B981",
     icon: <Database className="w-6 h-6 text-[#10B981]" />, 
-    title: "MongoDB Accelerated", 
-    desc: "Built on deeply scalable, distributed data structures. We process 10M+ webhook events securely every single day." 
+    title: "Digital Store & 1:1s", 
+    desc: "Convert attention into revenue instantly. Sell digital products, courses, and consult-sessions directly via bio-links." 
   },
   { 
     color: "#EC4899",
-    icon: <Infinity className="w-6 h-6 text-[#EC4899]" />, 
-    title: "Infinite Parallel Routing", 
-    desc: "Engage with 10,000 followers simultaneously without ever hitting conversational rate limits. Scale without the sandbox." 
+    icon: <Server className="w-6 h-6 text-[#EC4899]" />, 
+    title: "Agency Infrastructure", 
+    desc: "Data-powered roster management, intake funnels, and automated pitching for agencies scaling creator portfolios." 
   },
+];
+
+const marketGaps = [
+  { title: "Broken Discovery", desc: "Brands struggle to find relevant creators while mid-tier voices remain invisible." },
+  { title: "No Data Decisons", desc: "Decisions made on gut-feeling rather than audience quality or ROI forecasting." },
+  { title: "Chaotic Workflows", desc: "Communication fragmented across email, DMs, and messaging apps." },
+  { title: "Pricing Opacity", desc: "Lack of standardized pricing models leading to a massive trust deficit." },
+  { title: "Unmeasurable ROI", desc: "Metrics are platform-dependent and disconnected from actual business outcomes." },
+  { title: "Rampant Fraud", desc: "Fake followers and bot engagement distort the true reach of campaigns." },
+  { title: "Zero Intelligence", desc: "Lack of predictive performance or automated campaign optimization." },
+  { title: "Fragmented Tools", desc: "Agencies using disconnected platforms for basic operations." }
+];
+
+const thesisPoints = [
+  { title: "AI Fit > Human Brokers", desc: "Influencer marketing is a matching problem, not a marketplace problem. AI predicts fits better than humans." },
+  { title: "Compliance as a Moat", desc: "We only build on official Meta APIs. No scraping, no session hijacking, zero account risk." },
+  { title: "India-First, Global Ambition", desc: "Leveraging India's massive creator base to build world-class infrastructure for the global economy." },
+  { title: "Full-Stack Creator OS", desc: "We aren't a feature; we are the operating system for analytics, AI tools, and commerce." }
 ];
 
 const steps = [
@@ -48,10 +66,10 @@ const steps = [
 ];
 
 const faqs = [
-  { q: "Is this safe for my Instagram account?", a: "100%. We operate strictly within Instagram's official API guidelines ensuring zero risk of shadowbans or account locks. We do not use scraping." },
-  { q: "How human does the AI sound?", a: "The Quantum Engine is trained exclusively on your historical conversational data. It mimics your exact syntax, emojis, and slang. It is indistinguishable from you." },
-  { q: "Can I take over a conversation?", a: "Yes. You have a unified dashboard where you can override the AI and instantly take over any high-value conversation in real-time." },
-  { q: "What does the Testing Phase waitlist mean?", a: "We are heavily restricting server loads to ensure 99.9% uptime for elite early creators. Waitlist approval currently takes ~48 hours." }
+  { q: "Is this safe for my Instagram account?", a: "100%. We are a Meta Verified partner, operating strictly within Instagram's official API guidelines. We never use scraping or session-hijacking techniques." },
+  { q: "How does the AI matching work?", a: "The Quantum Engine analyzes millions of audience data points and engagement trends to match brands with creators based on deep psychological fit, not just follower counts." },
+  { q: "What is the ERA score?", a: "Engagement Relevance Accuracy (ERA) is our proprietary metric that filters out bot activity and measures the true influence of a creator on their audience's purchasing decisions." },
+  { q: "Is it suitable for agencies?", a: "Yes. Creonnect provides full agency infrastructure, including roster analytics, unified pitching tools, and automated campaign tracking." }
 ];
 
 /** =======================================================
@@ -75,7 +93,7 @@ const FAQItem = ({ faq, index }: { faq: typeof faqs[0], index: number }) => {
       initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
       className="border-b border-black/10 dark:border-white/10"
     >
-      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between text-left group py-8 text-black dark:text-white">
+      <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between text-left group py-8 text-black dark:text-white cursor-none">
         <h3 className="text-xl sm:text-2xl font-bold pr-6 opacity-90 group-hover:opacity-100 transition-opacity">{faq.q}</h3>
         <span className={`w-12 h-12 shrink-0 rounded-full flex items-center justify-center transition-colors duration-300 ${isOpen ? 'bg-[#7C3AED] text-white' : 'bg-black/5 dark:bg-white/5 group-hover:bg-black/10 dark:group-hover:bg-white/10'}`}>
           {isOpen ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
@@ -131,69 +149,125 @@ export default function Home() {
                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                className="text-[3rem] sm:text-[4rem] md:text-[5.5rem] lg:text-[7rem] font-black tracking-tighter leading-[0.95] mb-8"
             >
-               Infinite Scale for <br className="hidden md:block"/>
+               The AI Layer for <br className="hidden md:block"/>
                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] via-[#3B82F6] to-[#7C3AED] animate-gradient-x bg-[length:200%_auto]">
-                  Elite Creators.
+                  the Creator Economy.
                </span>
             </motion.h1>
 
             {/* Benefit-Driven Subhead */}
             <motion.p 
                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2, duration: 1 }}
-               className="text-lg md:text-2xl font-light text-black/60 dark:text-white/60 max-w-3xl leading-relaxed mb-12 sm:px-4"
+               className="text-lg md:text-2xl font-light text-black/60 dark:text-white/60 max-w-4xl leading-relaxed mb-12 sm:px-4"
             >
-               Stop capping your revenue with manual DMs. <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">Creonnect</a> is the autonomous AI operating system that manages your community growth 24/7 without breaking a sweat.
+               QuantumRealm is an AI-first technology company building the intelligent infrastructure that helps creators scale, brands discover, and agencies automate growth.
             </motion.p>
 
             {/* Hyper-Optimized CTA Flow */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto px-2">
-               <a href="#offer" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-300 group">
-                  Secure Sandbox Access <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+               <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:scale-105 transition-transform duration-300 group cursor-none">
+                  Explore Creonnect <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                </a>
-               <a href="#problem" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white font-bold uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300">
-                  See the Engine
+               <a href="#problem" className="w-full sm:w-auto min-h-[64px] px-10 rounded-full bg-transparent border border-black/10 dark:border-white/10 text-black dark:text-white font-bold uppercase tracking-[0.15em] text-sm flex items-center justify-center gap-3 hover:bg-black/5 dark:hover:bg-white/5 transition-colors duration-300 cursor-none">
+                  Market Thesis
                </a>
             </motion.div>
          </div>
       </section>
 
       {/* ==========================================
-          2 & 3. PROBLEM VS SOLUTION (Juxtaposition Grid)
+          1.1 MARKET CONTEXT (NEW)
           ========================================== */}
-      <section id="problem" className="py-24 md:py-40 bg-black/[0.02] dark:bg-white/[0.02] border-y border-black/5 dark:border-white/5 relative">
-         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
-               
-               {/* High-Friction Problem Block */}
-               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} data-torch-color="#EF4444" className="p-8 sm:p-12 rounded-[2rem] border border-red-500/20 bg-red-500/5 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-red-500 opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-1000" />
-                  <SectionBadge text="The Human Bottleneck" colorHex="#EF4444" />
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.1] mb-6">Humans break at scale.</h2>
-                  <p className="text-lg text-black/60 dark:text-white/60 leading-relaxed font-light mb-8">
-                     When you hit 100k+ followers, manual engagement becomes impossible. Leads sit unread, comments go unliked, and sales are lost because <strong>human hours simply do not scale.</strong>
+      <section className="py-20 border-b border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
+         <div className="container mx-auto px-4 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+               <div className="text-left">
+                  <SectionBadge text="Market Opportunity" colorHex="#3B82F6" />
+                  <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-6 uppercase">A $250B Market <br/> on Broken Rails.</h2>
+                  <p className="text-xl text-black/60 dark:text-white/60 font-light leading-relaxed">
+                     The creator economy is exploding, yet the underlying infrastructure is fragmented, opaque, and human-dependent. We are building the rails for the next decade of digital commerce.
                   </p>
-                  <ul className="space-y-4 font-mono text-sm sm:text-base opacity-70 border-l border-red-500/30 pl-6">
-                     <li className="flex items-center gap-3"><span className="text-red-500 font-bold">✗</span> Missed brand inquiries in request folders.</li>
-                     <li className="flex items-center gap-3"><span className="text-red-500 font-bold">✗</span> Exhaustion from manual reply cycles.</li>
-                     <li className="flex items-center gap-3"><span className="text-red-500 font-bold">✗</span> Revenue left permanently on the table.</li>
-                  </ul>
-               </motion.div>
+               </div>
+               <div className="grid grid-cols-2 gap-4">
+                  <div data-torch-color="#3B82F6" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#3B82F6]/30 transition-all cursor-none">
+                     <div className="text-4xl font-black mb-2">$250B</div>
+                     <div className="text-[10px] uppercase tracking-widest opacity-50">Market Size</div>
+                  </div>
+                  <div data-torch-color="#7C3AED" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#7C3AED]/30 transition-all cursor-none">
+                     <div className="text-4xl font-black mb-2">3-Sided</div>
+                     <div className="text-[10px] uppercase tracking-widest opacity-50">Platform Ecosystem</div>
+                  </div>
+                  <div data-torch-color="#10B981" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#10B981]/30 transition-all cursor-none">
+                     <div className="text-4xl font-black mb-2">100%</div>
+                     <div className="text-[10px] uppercase tracking-widest opacity-50">API Compliance</div>
+                  </div>
+                  <div data-torch-color="#EC4899" className="p-8 rounded-3xl bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-sm group hover:border-[#EC4899]/30 transition-all cursor-none">
+                     <div className="text-4xl font-black mb-2">AI-First</div>
+                     <div className="text-[10px] uppercase tracking-widest opacity-50">Core Architecture</div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </section>
 
-               {/* Autonomous Solution Block */}
-               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} data-torch-color="#10B981" className="p-8 sm:p-12 rounded-[2rem] border border-[#10B981]/30 bg-[#10B981]/5 relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981] opacity-10 blur-[80px] rounded-full group-hover:opacity-20 transition-opacity duration-1000" />
-                  <SectionBadge text="The Quantum Ecosystem" colorHex="#10B981" />
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-[1.1] mb-6">Algorithms scale infinitely.</h2>
-                  <p className="text-lg text-black/60 dark:text-white/60 leading-relaxed font-light mb-8">
-                     <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="text-primary font-bold hover:underline">Creonnect</a> replaces rote repetition with predictive AI agents. We handle DMs, analytics, and community management continuously—deploying the exact tone of your brand perfectly safely.
+      {/* ==========================================
+          2. THE 8 CRITICAL GAPS (Expanded Problem)
+          ========================================== */}
+      <section id="problem" className="py-24 md:py-40 relative">
+         <div className="container mx-auto px-4 max-w-7xl">
+            <div className="text-center mb-20">
+               <SectionBadge text="The Challenge" colorHex="#EF4444" />
+               <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase mb-6">Systemic Failures.</h2>
+               <p className="text-xl text-black/50 dark:text-white/50 max-w-3xl mx-auto font-light">
+                  Today's creator ecosystem suffers from 8 core friction points that prevent true scale. We've identified the broken nodes.
+               </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+               {marketGaps.map((gap, i) => (
+                  <motion.div 
+                     key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                     data-torch-color="#EF4444"
+                     className="p-8 rounded-3xl border border-black/5 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:bg-red-500/5 hover:border-red-500/20 transition-all group cursor-none"
+                  >
+                     <div className="text-xs font-mono mb-4 opacity-30 group-hover:opacity-100 group-hover:text-red-500 transition-all">GAP_0{i+1}</div>
+                     <h3 className="text-xl font-bold mb-3 tracking-tight">{gap.title}</h3>
+                     <p className="text-sm text-black/60 dark:text-white/60 leading-relaxed font-light">{gap.desc}</p>
+                  </motion.div>
+               ))}
+            </div>
+         </div>
+      </section>
+
+      {/* ==========================================
+          2.1 THE QUANTUM THESIS (NEW)
+          ========================================== */}
+      <section className="py-24 md:py-40 bg-black/[0.02] dark:bg-white/[0.02] border-y border-black/5 dark:border-white/5 overflow-hidden relative">
+         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#7C3AED] opacity-[0.05] blur-[150px] rounded-full translate-x-1/2 -translate-y-1/2" />
+         <div className="container mx-auto px-4 max-w-7xl relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+               <div>
+                  <h2 className="text-5xl md:text-8xl font-black tracking-tighter uppercase mb-8 leading-[0.85]">What We <br/> Believe.</h2>
+                  <p className="text-xl text-black/50 dark:text-white/50 font-light leading-relaxed max-w-xl">
+                     Our roadmap is driven by a set of core conviction points that differentiate us from "just another marketplace."
                   </p>
-                  <ul className="space-y-4 font-mono text-sm sm:text-base opacity-90 border-l border-[#10B981]/50 pl-6">
-                     <li className="flex items-center gap-3"><span className="text-[#10B981] font-bold">✓</span> Contextual auto-closing of leads in DMs.</li>
-                     <li className="flex items-center gap-3"><span className="text-[#10B981] font-bold">✓</span> 24/7 autonomous engagement protocols.</li>
-                     <li className="flex items-center gap-3"><span className="text-[#10B981] font-bold">✓</span> Zero margin of human error.</li>
-                  </ul>
-               </motion.div>
-
+               </div>
+               <div className="space-y-6">
+                  {thesisPoints.map((point, i) => (
+                     <motion.div 
+                        key={i} initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                        data-torch-color="#7C3AED"
+                        className="flex gap-8 p-8 rounded-[2.5rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 cursor-none group relative overflow-hidden"
+                     >
+                        <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                        <div className="text-4xl font-black opacity-20 shrink-0 group-hover:opacity-100 group-hover:text-[#7C3AED] transition-all relative z-10">0{i+1}</div>
+                        <div className="relative z-10">
+                           <h3 className="text-2xl font-bold mb-3 tracking-tight">{point.title}</h3>
+                           <p className="text-black/50 dark:text-white/50 leading-relaxed font-light text-lg">{point.desc}</p>
+                        </div>
+                     </motion.div>
+                  ))}
+               </div>
             </div>
          </div>
       </section>
@@ -207,12 +281,12 @@ export default function Home() {
          
          <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
             <div className="flex flex-col items-center text-center mb-16 md:mb-24">
-               <SectionBadge text="System Mechanics" />
+               <SectionBadge text="Ecosystem Architecture" />
                <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-black uppercase tracking-tighter mb-6 leading-[0.9]">
-                  The Platform Architecture
+                  Infinite Creator Rails.
                </h2>
                <p className="text-lg sm:text-xl text-black/50 dark:text-white/50 max-w-3xl font-light leading-relaxed">
-                  Built exclusively for the top 1%. Our proprietary AI layer operates natively on a high-throughput, horizontally scalable MongoDB blueprint.
+                  Our proprietary AI layer operates natively on a high-throughput, horizontally scalable MongoDB blueprint, ensuring 99.9% uptime and official Meta API security for the global elite.
                </p>
             </div>
 
@@ -221,7 +295,7 @@ export default function Home() {
                   <motion.div 
                      key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ delay: i * 0.1, duration: 0.5 }}
                      data-torch-color={feat.color}
-                     className="p-8 sm:p-12 rounded-[2rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 group relative overflow-hidden"
+                     className="p-8 sm:p-12 rounded-[2rem] bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-500 group relative overflow-hidden cursor-none"
                   >
                      {/* Hover Glow */}
                      <div className="absolute inset-0 bg-gradient-to-br from-[#7C3AED]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -236,6 +310,50 @@ export default function Home() {
             </div>
          </div>
       </section>
+      {/* ==========================================
+          5. TARGET AUDIENCES (NEW)
+          ========================================== */}
+      <section className="py-24 md:py-40 border-y border-black/5 dark:border-white/5 bg-black/[0.01] dark:bg-white/[0.01]">
+         <div className="container mx-auto px-4 max-w-7xl">
+            <div className="text-center mb-20">
+               <SectionBadge text="Who We Power" colorHex="#7C3AED" />
+               <h2 className="text-4xl md:text-7xl font-black tracking-tighter uppercase mb-6">Built for the <br/> Whole Ecosystem.</h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+               { [
+                  { 
+                    title: "Creators", 
+                    focus: "Growth & Revenue", 
+                    color: "#7C3AED",
+                    desc: "Focus on creating content while our AI handles lead capture, DMs, and monetization 24/7." 
+                  },
+                  { 
+                    title: "Brands", 
+                    focus: "ROI & Discovery", 
+                    color: "#3B82F6",
+                    desc: "Find the right voices using deep psychological matching and verified performance data." 
+                  },
+                  { 
+                    title: "Agencies", 
+                    focus: "Scale & Efficiency", 
+                    color: "#10B981",
+                    desc: "Manage massive creator rosters with automated pitching, tracking, and intake funnels." 
+                  }
+               ].map((audience, i) => (
+                  <motion.div 
+                     key={i} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                     data-torch-color={audience.color}
+                     className="p-10 rounded-[3rem] bg-white dark:bg-black border border-black/5 dark:border-white/5 shadow-xl group hover:-translate-y-2 transition-all duration-500 cursor-none"
+                  >
+                     <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[#7C3AED] mb-4 group-hover:text-primary transition-colors">{audience.focus}</div>
+                     <h3 className="text-3xl font-bold mb-6 tracking-tight">{audience.title}</h3>
+                     <p className="text-black/60 dark:text-white/60 leading-relaxed font-light">{audience.desc}</p>
+                  </motion.div>
+               ))}
+            </div>
+         </div>
+      </section>
 
       {/* ==========================================
           5. HOW IT WORKS (Deployment Flow)
@@ -243,7 +361,7 @@ export default function Home() {
       <section data-theme-section="inverted" className="py-24 md:py-40 bg-black dark:bg-white text-white dark:text-black">
          <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
             <h2 className="text-4xl sm:text-5xl md:text-[4rem] font-black uppercase tracking-tighter mb-16 md:mb-32 text-center leading-[0.9]">
-               Deployment Protocol
+               Scale Sequence
             </h2>
             
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 md:gap-8 relative">
@@ -317,13 +435,15 @@ export default function Home() {
          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,var(--color-primary)_0%,transparent_60%)] opacity-30 dark:opacity-[0.15] pointer-events-none" />
          <div className="container mx-auto px-4 text-white dark:text-black relative z-10 flex flex-col items-center">
             <h2 className="text-[3rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black uppercase tracking-tighter mb-12 sm:mb-16 leading-[0.85]">
-               Scale <span className="opacity-80 italic">Without</span><br/> Limits.
+               Build <span className="opacity-80 italic">The</span><br/> Future.
             </h2>
-            <a href="#offer" className="inline-flex w-full sm:w-auto min-h-[72px] px-12 sm:px-16 rounded-full bg-white dark:bg-black text-black dark:text-white font-black uppercase tracking-[0.2em] text-sm sm:text-base items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(255,255,255,0.15)] dark:shadow-[0_0_60px_rgba(0,0,0,0.15)] group">
-               Initialize Sequence <ArrowRight className="w-6 h-6 animate-pulse group-hover:translate-x-2 transition-transform" />
+            <a href="https://creonnect.com" target="_blank" rel="noopener noreferrer" className="inline-flex w-full sm:w-auto min-h-[72px] px-12 sm:px-16 rounded-full bg-white dark:bg-black text-black dark:text-white font-black uppercase tracking-[0.2em] text-sm sm:text-base items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(255,255,255,0.15)] dark:shadow-[0_0_60px_rgba(0,0,0,0.15)] group cursor-none">
+               Initialize Creonnect <ArrowRight className="w-6 h-6 animate-pulse group-hover:translate-x-2 transition-transform" />
             </a>
          </div>
       </section>
+
+      <CareersSection />
 
 
     </main>
