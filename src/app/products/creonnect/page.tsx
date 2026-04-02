@@ -1,204 +1,210 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Zap, MessageSquare, TrendingUp, Infinity, ShieldCheck, 
-  ArrowRight, Globe, Lock, Cpu, Database, BarChart3, 
-  Terminal, Sparkles, Network, Fingerprint
-} from "lucide-react";
-import React, { useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { MessageSquare, ArrowRight, Network, Fingerprint } from "lucide-react";
+import React, { useRef } from "react";
 import Link from "next/link";
 
 /** ==========================================
  * DATA CONSTANTS
  * ========================================== */
 
-const deepFeatures = [
+const teaserProtocols = [
   {
-    icon: <MessageSquare className="w-6 h-6" />,
+    icon: <MessageSquare />,
     title: "Syntactic Mimicry",
-    desc: "Our engine doesn't just reply; it adapts to your unique lexical density, emoji frequency, and response latency to remain perfectly human.",
+    tagline: "Neural Adaptation Protocol",
+    desc: "Adapts to unique lexical density and emoji frequency to remain perfectly human.",
     color: "#7C3AED"
   },
   {
-    icon: <Network className="w-6 h-6" />,
-    title: "Parallel Routing",
-    desc: "Handle 10,000+ simultaneous conversations across multiple account instances without triggering anti-spam latency protocols.",
+    icon: <Network />,
+    title: "Parallel Iteration",
+    tagline: "Scaling Architecture",
+    desc: "Deploy unlimited instances across multiple platforms with synchronized intelligence.",
     color: "#3B82F6"
   },
   {
-    icon: <Fingerprint className="w-6 h-6" />,
+    icon: <Fingerprint />,
     title: "Neural Gating",
-    desc: "AI identifies high-value brand inquiries and potential collaborations, instantly escalating them to your human-led priority inbox.",
+    tagline: "Surgical Priority",
+    desc: "Instantly identifies and prioritizes the elite 1% of community interactions.",
     color: "#10B981"
-  },
-  {
-    icon: <BarChart3 className="w-6 h-6" />,
-    title: "Velocity Tracking",
-    desc: "Predictive engagement analytics that tell you exactly when your community is most receptive to conversion-led interactions.",
-    color: "#EC4899"
   }
-];
-
-const technicalSpecs = [
-  { label: "Throughput", value: "10M+ events/day", icon: <Database /> },
-  { label: "Latency", value: "<120ms Neuro-Response", icon: <Cpu /> },
-  { label: "Security", value: "E2E RSA-4096 Encryption", icon: <Lock /> },
-  { label: "Architecture", value: "Distributed MongoDB Atlas", icon: <Terminal /> }
 ];
 
 /** ==========================================
  * COMPONENTS
  * ========================================== */
 
-const SectionBadge = ({ text, color = "#7C3AED" }: { text: string; color?: string }) => (
-  <motion.div 
-    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 mb-8 backdrop-blur-sm"
-  >
-    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: color }} />
-    <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-80">{text}</span>
-  </motion.div>
+const ProtocolBadge = ({ text }: { text: string }) => (
+  <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 mb-12 shadow-sm">
+    <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+    <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-60 italic">{text}</span>
+  </div>
 );
+
+const TeaserCard = ({ icon, title, tagline, desc, i }: any) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { stiffness: 300, damping: 30 };
+  const mouseXSpring = useSpring(mouseX, springConfig);
+  const mouseYSpring = useSpring(mouseY, springConfig);
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const x = (e.clientX - rect.left) / width - 0.5;
+    const y = (e.clientY - rect.top) / height - 0.5;
+    mouseX.set(x);
+    mouseY.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -12, scale: 1.02 }}
+      viewport={{ once: true }}
+      transition={{ 
+        delay: i * 0.1, 
+        duration: 0.8,
+        y: { type: "spring", stiffness: 800, damping: 40 },
+        scale: { type: "spring", stiffness: 800, damping: 40 }
+      }}
+      style={{
+        rotateX,
+        rotateY,
+        transformStyle: "preserve-3d",
+      }}
+      className="group relative flex flex-col items-center text-center p-10 md:p-12 rounded-[3rem] bg-white dark:bg-zinc-900/40 border border-black/[0.04] dark:border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] dark:shadow-2xl dark:shadow-black/40 hover:border-primary/30 transition-all duration-700 perspective-1000 cursor-none"
+    >
+      {/* Neural Grid Teaser Background */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none group-hover:opacity-[0.07] transition-opacity duration-700"
+        style={{ transform: "translateZ(-20px)" }}
+      >
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,black_1px,transparent_1px)] dark:bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
+      </div>
+
+      {/* Primary Glow Bloom */}
+      <div 
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-40 h-40 bg-primary/10 blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
+        style={{ transform: "translateZ(-40px)" }}
+      />
+      
+      {/* Icon Cluster */}
+      <div 
+        className="relative z-10 w-16 h-16 rounded-[1.5rem] bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/20 dark:text-white/20 group-hover:text-primary group-hover:bg-primary/5 transition-all duration-500 [&>svg]:w-7 [&>svg]:h-7"
+        style={{ transform: "translateZ(50px)" }}
+      >
+        {icon}
+        <div className="absolute inset-0 rounded-[1.5rem] bg-primary/20 scale-0 group-hover:scale-150 blur-2xl transition-transform duration-700 opacity-0 group-hover:opacity-40" />
+      </div>
+      
+      <div className="relative z-10 space-y-6" style={{ transform: "translateZ(30px)" }}>
+        <div className="space-y-3">
+          <span className="text-[9px] font-black uppercase tracking-[0.5em] text-primary/80 italic drop-shadow-sm">Neural Adaptation Protocol</span>
+          <h3 className="text-3xl md:text-4xl font-black tracking-tighter uppercase leading-none">{title}</h3>
+        </div>
+        <p className="text-base md:text-lg text-black/50 dark:text-white/40 leading-relaxed font-light px-6">
+          {desc}
+        </p>
+      </div>
+      
+      {/* Quantum Card Shimmer */}
+      <div className="absolute inset-0 rounded-[3rem] overflow-hidden pointer-events-none" style={{ transform: "translateZ(10px)" }}>
+        <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent -translate-x-full group-hover:animate-quantum-scan" />
+      </div>
+    </motion.div>
+  );
+};
 
 export default function CreonnectPage() {
   return (
-    <main className="min-h-screen bg-white dark:bg-[#000000] text-black dark:text-white transition-colors duration-500 overflow-x-hidden pt-40">
+    <div className="w-full bg-white dark:bg-[#050505] text-black dark:text-white transition-colors duration-700 min-h-screen pt-40 overflow-x-hidden flex flex-col items-center">
       
-      {/* Background Orbital Grid */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[1200px] bg-[radial-gradient(circle_at_50%_0%,rgba(124,58,237,0.05),transparent_70%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,black_70%,transparent_100%)] opacity-50" />
+      {/* Background Ambience */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1400px] h-[800px] bg-[radial-gradient(circle_at_50%_0%,rgba(92,39,254,0.06),transparent_70%)] opacity-50" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(128,128,128,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(128,128,128,0.02)_1px,transparent_1px)] bg-[size:60px_60px]" />
       </div>
 
-      <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
+      <div className="container mx-auto px-6 md:px-12 max-w-[1400px] relative z-10 flex flex-col items-center">
         
-        {/* HERO SECTION */}
-        <section className="flex flex-col items-center text-center mb-40 dark:cursor-none" data-torch-color="#7C3AED">
-          <SectionBadge text="Product Deep Dive" />
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-[3.5rem] sm:text-[5rem] md:text-[8rem] lg:text-[10rem] font-black tracking-tighter leading-[0.8] mb-12 uppercase"
+        {/* RECONSTRUCTED HERO */}
+        <section className="flex flex-col items-center text-center mb-40 md:mb-60 dark:cursor-none" data-torch-color="#5C27FE">
+          <ProtocolBadge text="Product Identification: Creonnect" />
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col items-center"
           >
-            Creonnect <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] via-[#3B82F6] to-[#7C3AED] animate-gradient-x bg-[length:200%_auto]">Engine.</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
-            className="text-lg md:text-2xl text-black/60 dark:text-white/60 max-w-3xl font-light leading-relaxed mb-16"
-          >
-            The world's first autonomous AI Operating System designed exclusively for the creator economy's elite 1%. Scale your community across every conversational touchpoint without human intervention.
-          </motion.p>
-
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="flex flex-col sm:flex-row gap-6 w-full sm:w-auto">
-             <Link href="#waitlist" className="h-20 px-12 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.2em] text-sm flex items-center justify-center gap-4 hover:scale-105 transition-transform shadow-[0_0_60px_rgba(124,58,237,0.2)] group dark:cursor-none">
-                Secure Sandbox <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-             </Link>
-          </motion.div>
-        </section>
-
-        {/* THE CORE PROBLEM */}
-        <section className="mb-40 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center dark:cursor-none" data-torch-color="#EF4444">
-          <motion.div initial={{ opacity: 0, x: -40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-            <SectionBadge text="The Bottleneck" color="#EF4444" />
-            <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Human response scales linearly. <br /><span className="opacity-40 italic">Opportunities do not.</span></h2>
-            <p className="text-lg text-black/60 dark:text-white/60 font-light leading-relaxed mb-10">
-              As your audience grows to 1M+, you hit a physical limit. You can only reply to so many DMs, react to so many mentions, and close so many sales. Every unread message is a lost lead. Every delayed response is a cooling prospect.
-            </p>
-            <div className="space-y-6">
-              {[
-                "Lost conversion rates due to latency.",
-                "Inconsistent brand tone across teams.",
-                "Platform-imposed rate limits on manual actions."
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-4 text-sm font-black uppercase tracking-widest opacity-60">
-                  <div className="w-6 h-6 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">×</div>
-                  {item}
-                </div>
-              ))}
-            </div>
-          </motion.div>
-          
-          <div className="relative aspect-square">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#7C3AED]/20 to-transparent blur-[100px] animate-pulse" />
-            <div className="relative h-full w-full rounded-[3rem] border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 backdrop-blur-xl flex items-center justify-center overflow-hidden">
-               {/* Visual representation of a neural network/bottleneck */}
-               <div className="absolute inset-0 opacity-20">
-                  <div className="w-full h-full bg-[radial-gradient(circle_at_center,var(--color-primary)_1px,transparent_1px)] bg-[size:20px_20px]" />
-               </div>
-               <Sparkles className="w-32 h-32 text-[#7C3AED] animate-pulse" />
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURES GRID */}
-        <section className="mb-40 dark:cursor-none" data-torch-color="#7C3AED">
-          <div className="flex flex-col items-center text-center mb-24">
-            <SectionBadge text="Neural Architecture" />
-            <h2 className="text-4xl md:text-7xl font-black uppercase tracking-tighter">Engine Specs</h2>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {deepFeatures.map((feat, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                data-torch-color={feat.color}
-                className="p-12 rounded-[3.5rem] bg-black/[0.02] dark:bg-white/[0.03] border border-black/5 dark:border-white/5 hover:border-[#7C3AED]/30 transition-all duration-700 group dark:cursor-none"
-              >
-                <div className="w-16 h-16 rounded-[1.5rem] bg-white dark:bg-[#0A0A0A] border border-black/10 dark:border-white/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500" style={{ color: feat.color }}>
-                  {feat.icon}
-                </div>
-                <h3 className="text-3xl font-bold mb-6 tracking-tight">{feat.title}</h3>
-                <p className="text-lg text-black/60 dark:text-white/60 font-light leading-relaxed">{feat.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* TECHNICAL STACK */}
-        <section className="mb-40 py-32 rounded-[4rem] bg-black dark:bg-white text-white dark:text-black overflow-hidden relative dark:cursor-none" data-torch-color="#3B82F6" data-theme-section="inverted">
-          <div className="absolute inset-0 opacity-20 mix-blend-overlay">
-            <div className="w-full h-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-          </div>
-          
-          <div className="container mx-auto px-12 relative z-10">
-            <h2 className="text-3xl font-black uppercase tracking-[0.3em] mb-20 text-center opacity-60 italic">Technical Protocol v4.0</h2>
+            <h1 className="text-[3.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[7.5rem] font-black tracking-tighter leading-[0.85] uppercase italic mb-10">
+              Creonnect <br />
+              <span className="text-black/5 dark:text-white/10">Engine.</span>
+            </h1>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-              {technicalSpecs.map((spec, i) => (
-                <div key={i} className="flex flex-col items-center text-center">
-                  <div className="w-12 h-12 mb-8 opacity-40">{spec.icon}</div>
-                  <span className="text-[10px] font-black uppercase tracking-[0.2em] mb-4 opacity-50">{spec.label}</span>
-                  <p className="text-2xl font-black uppercase tracking-tight">{spec.value}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="space-y-4 max-w-3xl mb-16"
+            >
+              <p className="text-lg md:text-xl text-black/60 dark:text-white/40 font-medium tracking-tight leading-relaxed px-4">
+                The definitive AI Operating System for the creator economy's elite 1%.
+              </p>
+              <p className="text-base md:text-lg text-black/40 dark:text-white/20 font-light tracking-tight leading-relaxed">
+                Scaling community interaction with surgical precision.
+              </p>
+            </motion.div>
+
+            <Link 
+              href="https://www.creonnect.com" 
+              target="_blank"
+              className="group relative h-20 px-14 rounded-[2rem] bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.3em] text-[11px] flex items-center justify-center gap-6 overflow-hidden shadow-2xl transition-all hover:scale-105 active:scale-95"
+            >
+              <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
+              Secure Sandbox Access <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+            </Link>
+          </motion.div>
         </section>
 
-        {/* FINAL CTA */}
-        <section id="waitlist" className="pb-40 text-center dark:cursor-none" data-torch-color="#7C3AED">
-          <div className="inline-flex items-center gap-4 mb-12">
-             <div className="h-[1px] w-12 bg-[#7C3AED]/30" />
-             <span className="text-sm font-black uppercase tracking-[0.5em] text-[#7C3AED]">Sequence Initialize</span>
-             <div className="h-[1px] w-12 bg-[#7C3AED]/30" />
-          </div>
-          <h2 className="text-[4rem] sm:text-[6rem] md:text-[9rem] font-black uppercase tracking-tighter leading-[0.8] mb-16">
-            Enter the <br />
-            <span className="italic font-light opacity-20">Quantum</span> Realm.
-          </h2>
-          <button className="h-24 px-16 rounded-full bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.2em] text-lg hover:scale-105 active:scale-95 transition-all shadow-[0_0_80px_rgba(124,58,237,0.3)] group dark:cursor-none">
-            Apply for Waitlist <ArrowRight className="w-6 h-6 ml-4 inline-block group-hover:translate-x-2 transition-transform" />
-          </button>
-          <p className="mt-12 text-sm font-mono opacity-40 uppercase tracking-widest">Next testing batch: 48 Hours Remaining</p>
+        {/* 3-CARD TEASER SUITE (WITH 3D TILT) */}
+        <section className="pb-60 w-full grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 dark:cursor-none" data-torch-color="#7C3AED">
+          {teaserProtocols.map((protocol, i) => (
+            <TeaserCard key={i} {...protocol} i={i} />
+          ))}
         </section>
 
       </div>
-    </main>
+
+      <style jsx global>{`
+        @keyframes quantum-scan {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-quantum-scan {
+          animation: quantum-scan 2.5s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+      `}</style>
+    </div>
   );
 }
