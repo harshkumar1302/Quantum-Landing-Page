@@ -118,7 +118,7 @@ export default function Home() {
   const [isWaitlisted, setIsWaitlisted] = useState(false);
 
   return (
-    <main className="w-full bg-white dark:bg-[#000000] text-black dark:text-white transition-colors duration-500 overflow-clip">
+    <main className="w-full bg-white dark:bg-[#000000] text-black dark:text-white transition-colors duration-500 overflow-x-hidden">
 
       {/* ==========================================
           1. HERO (Value + Trust + CTA)
@@ -228,7 +228,7 @@ export default function Home() {
                   <motion.div 
                      key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
                      data-torch-color="#EF4444"
-                     className="p-8 rounded-3xl border border-black/5 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] hover:bg-red-500/5 hover:border-red-500/20 transition-all group dark:cursor-none"
+                     className="p-8 rounded-3xl border border-black/5 dark:border-white/10 bg-black/[0.03] dark:bg-white/[0.03] hover:bg-red-500/5 hover:border-red-500/20 transition-all group dark:cursor-none will-change-transform"
                   >
                      <div className="text-xs font-mono mb-4 opacity-30 group-hover:opacity-100 group-hover:text-red-500 transition-all">GAP_0{i+1}</div>
                      <h3 className="text-xl font-bold mb-3 tracking-tight">{gap.title}</h3>

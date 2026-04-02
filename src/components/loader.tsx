@@ -9,16 +9,6 @@ export function Loader() {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    // Check if loader has already played in this session
-    const hasPlayed = sessionStorage.getItem("quantum-loader-played");
-    if (hasPlayed) {
-      setIsFirstLoad(false);
-      setIsLoading(false);
-      return;
-    }
-
-    sessionStorage.setItem("quantum-loader-played", "true");
-
     // Smooth progress counter that accelerates
     const start = Date.now();
     const duration = 2400;
@@ -48,7 +38,7 @@ export function Loader() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.02, filter: "blur(12px)" }}
           transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden"
+          className="fixed inset-0 z-[99999] w-screen h-screen flex items-center justify-center overflow-hidden"
           style={{ background: "var(--background)" }}
         >
           {/* Ambient background glow */}

@@ -77,31 +77,34 @@ export function TorchCursor() {
 
     const manageMouseMove = (e: MouseEvent) => {
       const { clientX: cx, clientY: cy } = e;
-      mouseX.set(cx);
-      mouseY.set(cy);
+      
+      // Use requestAnimationFrame for smoother cursor updates
+      requestAnimationFrame(() => {
+        mouseX.set(cx);
+        mouseY.set(cy);
 
-      if (isHovering && currentElement.current) {
-        const rect = currentElement.current.getBoundingClientRect();
-        
-        // SAFETY EXIT: If mouse somehow drifts out without triggering mouseover/out
-        const buffer = 10;
-        if (cx < rect.left - buffer || cx > rect.right + buffer || cy < rect.top - buffer || cy > rect.bottom + buffer) {
-           setIsHovering(false);
-           currentElement.current = null;
-        } else {
-           updateSwarmTargets(rect);
+        if (isHovering && currentElement.current) {
+          const rect = currentElement.current.getBoundingClientRect();
+          
+          // SAFETY EXIT: If mouse somehow drifts out without triggering mouseover/out
+          const buffer = 10;
+          if (cx < rect.left - buffer || cx > rect.right + buffer || cy < rect.top - buffer || cy > rect.bottom + buffer) {
+             setIsHovering(false);
+             currentElement.current = null;
+          } else {
+             updateSwarmTargets(rect);
+          }
+        } else if (!isHovering) {
+          // SWARM CLUSTER: Natural orbiting noise
+          p1tx.set(cx - 10); p1ty.set(cy - 8);
+          p2tx.set(cx + 12); p2ty.set(cy - 5);
+          p3tx.set(cx + 8);  p3ty.set(cy + 10);
+          p4tx.set(cx - 14); p4ty.set(cy + 4);
         }
-      } else if (!isHovering) {
-        // SWARM CLUSTER: Natural orbiting noise
-        p1tx.set(cx - 10); p1ty.set(cy - 8);
-        p2tx.set(cx + 12); p2ty.set(cy - 5);
-        p3tx.set(cx + 8);  p3ty.set(cy + 10);
-        p4tx.set(cx - 14); p4ty.set(cy + 4);
-      }
+      });
     };
 
     const manageMouseOver = (e: MouseEvent) => {
-      // Find the nearest interactive element even if target is a text node / icon
       const target = e.target as Node;
       const el = target instanceof Element ? target : target.parentElement;
       if (!el) return;
@@ -134,11 +137,16 @@ export function TorchCursor() {
       }
     };
 
+    let scrollTimeout: number;
     const handleScroll = () => {
-      if (isHovering && currentElement.current) {
-        const rect = currentElement.current.getBoundingClientRect();
-        updateSwarmTargets(rect);
-      }
+      // Throttle scroll updates to avoid layout thrashing
+      if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+      scrollTimeout = requestAnimationFrame(() => {
+        if (isHovering && currentElement.current) {
+          const rect = currentElement.current.getBoundingClientRect();
+          updateSwarmTargets(rect);
+        }
+      });
     };
 
     window.addEventListener("mousemove", manageMouseMove);

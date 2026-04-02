@@ -8,6 +8,7 @@ import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Moon, Sun, ArrowRight, ChevronDown, Sparkles, Layers } from "lucide-react";
 import { Logo } from "./logo";
+import { useLenis } from "lenis/react";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,6 +18,11 @@ export function Navbar() {
   
   const pathname = usePathname();
   
+  // High-precision scroll detection via Lenis
+  useLenis(({ scroll }) => {
+    setScrolled(scroll > 20);
+  });
+
   // Hover states
   const [productsHovered, setProductsHovered] = useState(false);
   const [hoveredNav, setHoveredNav] = useState<number | null>(null);
@@ -30,21 +36,16 @@ export function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <>
     <header 
-      className={`fixed top-0 inset-x-0 ${isOpen ? "z-[70]" : "z-50"} w-full transition-all duration-500 border-b ${
+      className={`fixed top-0 inset-x-0 ${isOpen ? "z-[70]" : "z-50"} w-full transition-all duration-500 border-b backdrop-blur-md ${
         isOpen
           ? "bg-transparent border-transparent py-4"
           : scrolled 
-            ? "bg-white dark:bg-black border-black/10 dark:border-white/10 shadow-sm py-4" 
+            ? "bg-white/80 dark:bg-black/80 border-black/10 dark:border-white/10 shadow-sm py-4" 
             : "bg-transparent border-transparent py-6"
       }`}
     >

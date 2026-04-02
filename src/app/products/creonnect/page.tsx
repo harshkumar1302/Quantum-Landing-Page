@@ -49,7 +49,7 @@ const TeaserCard = ({ icon, title, tagline, desc, i }: any) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springConfig = { stiffness: 300, damping: 30 };
+  const springConfig = { stiffness: 1000, damping: 50 };
   const mouseXSpring = useSpring(mouseX, springConfig);
   const mouseYSpring = useSpring(mouseY, springConfig);
 
@@ -81,21 +81,21 @@ const TeaserCard = ({ icon, title, tagline, desc, i }: any) => {
       whileInView={{ opacity: 1, y: 0 }}
       whileHover={{ y: -12, scale: 1.02 }}
       viewport={{ once: true }}
-      transition={{ 
-        delay: i * 0.1, 
+      transition={{
+        delay: i * 0.1,
         duration: 0.8,
-        y: { type: "spring", stiffness: 800, damping: 40 },
-        scale: { type: "spring", stiffness: 800, damping: 40 }
+        y: { type: "spring", stiffness: 1200, damping: 40 },
+        scale: { type: "spring", stiffness: 1200, damping: 40 }
       }}
       style={{
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
       }}
-      className="group relative flex flex-col items-center text-center p-10 md:p-12 rounded-[3rem] bg-white dark:bg-zinc-900/40 border border-black/[0.04] dark:border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] dark:shadow-2xl dark:shadow-black/40 hover:border-primary/30 transition-all duration-700 perspective-1000 cursor-none"
+      className="group relative flex flex-col items-center text-center p-10 md:p-12 rounded-[3rem] bg-white dark:bg-zinc-900/40 border border-black/[0.04] dark:border-white/10 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] dark:shadow-2xl dark:shadow-black/40 hover:border-primary/50 transition-none perspective-1000 cursor-none"
     >
       {/* Neural Grid Teaser Background */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none group-hover:opacity-[0.07] transition-opacity duration-700"
         style={{ transform: "translateZ(-20px)" }}
       >
@@ -103,20 +103,20 @@ const TeaserCard = ({ icon, title, tagline, desc, i }: any) => {
       </div>
 
       {/* Primary Glow Bloom */}
-      <div 
+      <div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 w-40 h-40 bg-primary/10 blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000"
         style={{ transform: "translateZ(-40px)" }}
       />
-      
+
       {/* Icon Cluster */}
-      <div 
+      <div
         className="relative z-10 w-16 h-16 rounded-[1.5rem] bg-black/5 dark:bg-white/5 flex items-center justify-center text-black/20 dark:text-white/20 group-hover:text-primary group-hover:bg-primary/5 transition-all duration-500 [&>svg]:w-7 [&>svg]:h-7"
         style={{ transform: "translateZ(50px)" }}
       >
         {icon}
         <div className="absolute inset-0 rounded-[1.5rem] bg-primary/20 scale-0 group-hover:scale-150 blur-2xl transition-transform duration-700 opacity-0 group-hover:opacity-40" />
       </div>
-      
+
       <div className="relative z-10 space-y-6" style={{ transform: "translateZ(30px)" }}>
         <div className="space-y-3">
           <span className="text-[9px] font-black uppercase tracking-[0.5em] text-primary/80 italic drop-shadow-sm">Neural Adaptation Protocol</span>
@@ -126,7 +126,7 @@ const TeaserCard = ({ icon, title, tagline, desc, i }: any) => {
           {desc}
         </p>
       </div>
-      
+
       {/* Quantum Card Shimmer */}
       <div className="absolute inset-0 rounded-[3rem] overflow-hidden pointer-events-none" style={{ transform: "translateZ(10px)" }}>
         <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-primary/40 to-transparent -translate-x-full group-hover:animate-quantum-scan" />
@@ -138,7 +138,7 @@ const TeaserCard = ({ icon, title, tagline, desc, i }: any) => {
 export default function CreonnectPage() {
   return (
     <div className="w-full bg-white dark:bg-[#050505] text-black dark:text-white transition-colors duration-700 min-h-screen pt-40 overflow-x-hidden flex flex-col items-center">
-      
+
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1400px] h-[800px] bg-[radial-gradient(circle_at_50%_0%,rgba(92,39,254,0.06),transparent_70%)] opacity-50" />
@@ -146,12 +146,12 @@ export default function CreonnectPage() {
       </div>
 
       <div className="container mx-auto px-6 md:px-12 max-w-[1400px] relative z-10 flex flex-col items-center">
-        
+
         {/* RECONSTRUCTED HERO */}
         <section className="flex flex-col items-center text-center mb-40 md:mb-60 dark:cursor-none" data-torch-color="#5C27FE">
           <ProtocolBadge text="Product Identification: Creonnect" />
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -159,10 +159,9 @@ export default function CreonnectPage() {
           >
             <h1 className="text-[3.5rem] sm:text-[5rem] md:text-[6rem] lg:text-[7.5rem] font-black tracking-tighter leading-[0.85] uppercase italic mb-10">
               Creonnect <br />
-              <span className="text-black/5 dark:text-white/10">Engine.</span>
             </h1>
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
@@ -176,13 +175,13 @@ export default function CreonnectPage() {
               </p>
             </motion.div>
 
-            <Link 
-              href="https://www.creonnect.com" 
+            <Link
+              href="https://www.creonnect.com"
               target="_blank"
               className="group relative h-20 px-14 rounded-[2rem] bg-black dark:bg-white text-white dark:text-black font-black uppercase tracking-[0.3em] text-[11px] flex items-center justify-center gap-6 overflow-hidden shadow-2xl transition-all hover:scale-105 active:scale-95"
             >
               <div className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity" />
-              Secure Sandbox Access <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+              Creonnect Waitlist Access <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
             </Link>
           </motion.div>
         </section>
